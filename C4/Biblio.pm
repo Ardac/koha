@@ -1846,8 +1846,10 @@ sub GetMarcAuthors {
     my @marcauthors;
     my $authoritysep = C4::Context->preference('authoritysep');
 
-    foreach my $field ( $record->field($fields_filter) ) {
-        next unless $field->tag() >= $mintag && $field->tag() <= $maxtag;
+    foreach my $field ( $record->fields ) {
+        next unless ($field->tag() >= $mintag && $field->tag() <= $maxtag)
+        || ($field->tag() == 110)
+        || ($field->tag() == 111) ;
         my @subfields_loop;
         my @link_loop;
         my @subfields  = $field->subfields();
