@@ -12,12 +12,12 @@
 <li id="[% facets_loo.type_id %]">
 [% IF ( facets_loo.type_label_Authors ) %]Authors[% END %]
 [% IF ( facets_loo.type_label_Titles ) %]Titles[% END %]
-[% IF ( facets_loo.type_label_Topics ) %]<span id="facet-topics">Topics</span>[% END %]
-[% IF ( facets_loo.type_label_Places ) %]Places[% END %]
+[% IF ( facets_loo.type_label_Topics ) %]<span id="facet-topics">TSubject Terms</span>[% END %]
+[% IF ( facets_loo.type_label_Places ) %]Geographic Names[% END %]
 [% IF ( facets_loo.type_label_Series ) %]Series[% END %]
 [% IF ( facets_loo.type_label_ItemTypes ) %]Item types[% END %]
 [% UNLESS ( singleBranchMode ) %]
-[% IF ( facets_loo.type_label_Libraries ) %]Libraries[% END %]
+[% IF ( facets_loo.type_label_Libraries ) %]Holding Libraries[% END %]
 [% END %]
 [% IF ( facets_loo.type_label_Location ) %]Locations[% END %]
 <ul>
