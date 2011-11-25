@@ -129,6 +129,8 @@ melm 260$b      Publisher:w,Publisher:p
 melm 260$c      copydate,copydate:s
 melm 260        pl
 melm 300        Extent:w,Extent:p
+melm 336        content:w,content:p
+melm 338        media:w,media:p
 melm 400$a      Name-and-title
 melm 400$t      Author-title,Name-and-title,Title,Title-series
 melm 400$9      Koha-Auth-Number
