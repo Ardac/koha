@@ -33,6 +33,7 @@
     [% ELSE %]
     <option value="callnum">&nbsp;&nbsp;&nbsp;&nbsp; Call number</option>
     [% END %]
+    <option value="kw,Control-number">Accession Number</option>
     <option value="ln,rtrn">Language</option>
     <option value="nt">Notes/Comments</option>
     [% IF (marcflavour != 'UNIMARC' ) %]
