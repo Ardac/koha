@@ -1,5 +1,6 @@
 #!/usr/bin/perl
 
+# Parts Copyright 2010-2011 PTFS Europe Ltd.
 # Parts Copyright 2010 Biblibre
 
 # This file is part of Koha.
@@ -20,6 +21,7 @@
 use strict;
 use warnings;
 use CGI;
+use Readonly;
 use C4::Auth;
 use C4::Serials;
 use C4::Acquisition;
@@ -33,7 +35,6 @@ my $input = CGI->new;
 
 my $serialid = $input->param('serialid');
 my $op = $input->param('op');
-my $claimletter = $input->param('claimletter');
 my $supplierid = $input->param('supplierid');
 my $suppliername = $input->param('suppliername');
 my $order = $input->param('order');
@@ -49,21 +50,22 @@ my ($template, $loggedinuser, $cookie)
             });
 
 # supplierlist is returned in name order
+Readonly::Scalar my $MAX_SUPPLIER_LEN => 90;
 my $supplierlist = GetSuppliersWithLateIssues();
 for my $s (@{$supplierlist} ) {
     $s->{count} = scalar  GetLateOrMissingIssues($s->{id}, q{}, $order);
+    if (length $s->{name} > $MAX_SUPPLIER_LEN) {
+        $s->{name} = substr $s->{name}, 0, $MAX_SUPPLIER_LEN;
+    }
     if ($supplierid && $s->{id} == $supplierid) {
         $s->{selected} = 1;
     }
 }
 
-my $letters = GetLetters('claimissues');
-my @letters;
-foreach (keys %{$letters}){
-    push @letters ,{code=>$_,name=> $letters->{$_}};
-}
+my $letters = get_letters('claimissues');
+my $letter =
+  ( ( @{$letters} > 1 ) || ( $letters->[0]->{name} || $letters->[0]->{code} ) );
 
-my $letter=((scalar(@letters)>1) || ($letters[0]->{name}||$letters[0]->{code}));
 my  @missingissues;
 my @supplierinfo;
 if ($supplierid) {
@@ -74,30 +76,46 @@ if ($supplierid) {
 my $branchloop = GetBranchesLoop();
 unshift @$branchloop, {value=> 'all',name=>''};
 
-my $preview=0;
-if($op && $op eq 'preview'){
+my $preview = 0;
+if ( $op && $op eq 'preview' ) {
     $preview = 1;
-} else {
-    my @serialnums=$input->param('serialid');
-    if (@serialnums) { # i.e. they have been flagged to generate claims
-        SendAlerts('claimissues',\@serialnums,$input->param("letter_code"));
-        my $cntupdate=UpdateClaimdateIssues(\@serialnums);
-        ### $cntupdate SHOULD be equal to scalar(@$serialnums)
+}
+else {
+    my @serialnums = $input->param('serialid');
+    if (@serialnums) {    # i.e. they have been flagged to generate claims
+        my $format = 'email';
+        my $sub    = $input->param('submit_form');
+        if ( $sub =~ m/Download letter/i ) {
+            $format = 'file';
+        }
+        my $return =
+          C4::Claims::send_serials_claim( $input->param('letter_code'),
+            \@serialnums, $format );
+        UpdateClaimdateIssues( \@serialnums );
+        if ( $format eq 'file' && defined $return ) {
+            output_html_with_http_headers $input, $cookie, $return->{content};
+            exit;
+
+        }
     }
 }
-$template->param('letters'=>\@letters,'letter'=>$letter);
+
 $template->param(
-        order =>$order,
-        suploop => $supplierlist,
-        phone => $supplierinfo[0]->{phone},
-        booksellerfax => $supplierinfo[0]->{booksellerfax},
-        bookselleremail => $supplierinfo[0]->{bookselleremail},
-        preview => $preview,
-        missingissues => \@missingissues,
-        supplierid => $supplierid,
-        claimletter => $claimletter,
-        supplierloop => \@supplierinfo,
+    letters                  => $letters,
+    letter                   => $letter,
+    order                    => $order,
+    supplier_loop            => $supplierlist,
+    phone                    => $supplierinfo[0]->{phone},
+    booksellerfax            => $supplierinfo[0]->{booksellerfax},
+    bookselleremail          => $supplierinfo[0]->{bookselleremail},
+    preview                  => $preview,
+    missingissues            => \@missingissues,
+    supplierid               => $supplierid,
+    supplierloop             => \@supplierinfo,
+    dateformat               => C4::Context->preference('dateformat'),
+    DHTMLcalendar_dateformat => C4::Dates->DHTMLcalendar(),
+    dateformat_metric => 1,    # kludge dateformat not working correctly
         branchloop   => $branchloop,
         (uc(C4::Context->preference("marcflavour"))) => 1
-        );
+);
 output_html_with_http_headers $input, $cookie, $template->output;
