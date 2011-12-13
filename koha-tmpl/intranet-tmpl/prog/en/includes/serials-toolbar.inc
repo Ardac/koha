@@ -57,7 +57,7 @@
                                 <a href="/cgi-bin/koha/serials/subscription-add.pl?op=modify&amp;subscriptionid=[% subscriptionid %]">Edit subscription</a></li>
                                 [% IF ( cannotedit ) %] <li class="disabled"> [% ELSE %]
                                 <li> [% END %]
-                                <a href="/cgi-bin/koha/serials/subscription-add.pl?op=dup&amp;subscriptionid=[% subscriptionid %]">Edit as new (duplicate)</a></li>
+                                <a href="/cgi-bin/koha/serials/subscription-add.pl?op=dup&amp;subscriptionid=[% subscriptionid %]">Copy</a></li>
                                 [% IF ( CAN_user_serials_delete_subscription ) %]
                                 [% IF ( cannotedit ) %] <li class="disabled"> [% ELSE %]
                                 <li> [% END %]
