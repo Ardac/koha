@@ -3,12 +3,8 @@
     <option value="kw,phr">&nbsp;&nbsp;&nbsp;&nbsp; Keyword as phrase</option>
     <option value="au">Author</option>
     <option value="au,phr">&nbsp;&nbsp;&nbsp;&nbsp; Author as phrase</option>
-    <option value="cpn">&nbsp;&nbsp;&nbsp;&nbsp; Corporate name</option>
-    <option value="cfn">&nbsp;&nbsp;&nbsp;&nbsp; Conference name</option>
     <option value="cpn,phr">&nbsp;&nbsp;&nbsp;&nbsp; Corporate name as phrase</option>
     <option value="cfn,phr">&nbsp;&nbsp;&nbsp;&nbsp; Conference name as phrase</option>
-    <option value="pn">&nbsp;&nbsp;&nbsp;&nbsp; Personal name</option>
-    <option value="pn,phr">&nbsp;&nbsp;&nbsp;&nbsp; Personal name as phrase</option>
     <option value="ti">Title</option>
     <option value="ti,phr">&nbsp;&nbsp;&nbsp;&nbsp; Title as phrase</option>
     <option value="se">&nbsp;&nbsp;&nbsp;&nbsp; Series title</option>
