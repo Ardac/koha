@@ -146,6 +146,19 @@
 		window.open('claims.pl?supplierid='+ supplierid +'&amp;serialid='+ serialid +'&amp;op=preview' ,'popup', 'width=600,height=400,toolbar=no,scrollbars=yes');
 	}
 
+function downloadLetter(theForm) {
+    var windowName = "Claim Letter";
+    var supp = $('#supplierid').val();
+    var code = $('#letter_code').val();
+    var ser  = $('#serialid').val();
+    var url  = '/cgi-bin/koha/serials/claimletter.pl?supplierid=' + supp + '&letter_code=' + code + '&serialid=' + ser;
+
+    var newwindow = window.open(url, windowName);
+    if ( window.focus() ) {
+        newwindow.focus();
+    }
+}
+
 //]]>
 </script>
 </head>
@@ -267,7 +280,7 @@
                     <tr>
                         [% IF ( letter ) %]
                             <td>
-                    <input type="checkbox" name="serialid" value="[% missingissue.serialid %]" />
+                    <input type="checkbox" name="serialid" id="serialid" value="[% missingissue.serialid %]" />
                             </td>
                         [% END %]
                         <td>
@@ -309,7 +322,9 @@
                     <option value="[% letter.code %]">[% letter.name %]</option>
                 [% END %]
 			</select>
-	    <input type="hidden" name="op" value="send_alert" /><input type="submit" name="submit" class="button" value="Send notification" /></fieldset>
+	    <input type="hidden" name="op" value="send_alert" /><input type="submit" name="submit" class="button" value="Send notification" />
+	    <input type="button" name="submit_form" class="button" value="Download letter" onclick="downloadLetter(document.cform)" />
+         </fieldset>
             [% END %]
         </form>
     </fieldset>
