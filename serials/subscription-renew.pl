@@ -62,7 +62,7 @@ my $dbh   = C4::Context->dbh;
 my $mode           = $query->param('mode') || q{};
 my $op             = $query->param('op') || 'display';
 my $subscriptionid = $query->param('subscriptionid');
-my $done = 0;    # for after form has been submitted
+
 my ( $template, $loggedinuser, $cookie ) = get_template_and_user(
     {
         template_name   => "serials/subscription-renew.tmpl",
@@ -100,6 +100,7 @@ $template->param(
     bibliotitle    => $subscription->{bibliotitle},
     $op            => 1,
     popup          => ($mode eq 'popup'),
+    DHTMLcalendar_dateformat => C4::Dates->DHTMLcalendar(),
 );
 
 # Print the page
