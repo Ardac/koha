@@ -2,6 +2,7 @@ package C4::Serials;
 
 # Copyright 2000-2002 Katipo Communications
 # Parts Copyright 2010 Biblibre
+# Parts Copyright 2011 PTFS Europe Ltd
 #
 # This file is part of Koha.
 #
@@ -2516,6 +2517,22 @@ sub CloseSubscription {
         AND status = 1
     } );
     $sth->execute( $subscriptionid );
+}
+
+sub get_linked_orders {
+    my ( $biblionumber, $aqbooksellerid ) = @_;
+    if ( $biblionumber && $aqbooksellerid ) {
+        my $sql = <<'SQLEND';
+    select aqbasket.basketno, entrydate, purchaseordernumber, quantityreceived
+ from aqorders left join aqbasket on aqorders.basketno = aqbasket.basketno
+ where aqorders.biblionumber = ? and aqbasket.booksellerid=? order by entrydate desc;
+SQLEND
+        my $dbh = C4::Context->dbh;
+        return $dbh->selectall_arrayref( $sql, { Slice => {} },
+            $biblionumber, $aqbooksellerid );
+    }
+
+    return;
 }
 
 =head2 ReopenSubscription

@@ -49,7 +49,7 @@ use C4::Acquisition;
 use C4::Dates qw/format_date/;
 use C4::Bookseller qw( GetBookSeller );
 
-my $query=new CGI;
+my $query = CGI->new;
 my ($template, $loggedinuser, $cookie)
     = get_template_and_user({template_name => "serials/acqui-search-result.tmpl",
                  query => $query,
@@ -61,7 +61,6 @@ my ($template, $loggedinuser, $cookie)
 
 my $supplier=$query->param('supplier');
 my @suppliers = GetBookSeller($supplier);
-#my $count = scalar @suppliers;
 
 #build result page
 my $loop_suppliers = [];

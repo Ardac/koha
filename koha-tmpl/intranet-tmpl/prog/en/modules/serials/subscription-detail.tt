@@ -350,7 +350,7 @@ $(document).ready(function() {
                     [% IF ( serialslis.status2 ) %]Arrived[% END %]
                     [% IF ( serialslis.status3 ) %]Late[% END %]
                     [% IF ( serialslis.status4 ) %]Missing[% END %]
-                    [% IF ( serialslis.status5 ) %]Not issued[% END %]
+                    [% IF ( serialslis.status5 ) %]Not avail.[% END %]
                     [% IF ( serialslis.status6 ) %]Delete[% END %]
                     [% IF ( serialslis.status7 ) %]
                       Claimed
@@ -372,10 +372,12 @@ $(document).ready(function() {
             <li><span class="label">End date:</span> [% enddate %]</li>
             <li><span class="label">History start date:</span> [% histstartdate %] </li>
             <li><span class="label">History end date:</span> [% histenddate %]</li>
+<!--
             <li><span class="label">Received issues:</span>[% recievedlist %]</li>
             <li><span class="label">Missing issues:</span>[% missinglist %]</li>
             <li><span class="label">Nonpublic note:</span>[% internalnotes FILTER html_line_break %]</li>
             <li><span class="label">Public note:</span>[% notes FILTER html_line_break %]</li>
+-->
             <li><span class="label">History staff note:</span>[% librariannote FILTER html_line_break %]</li>
             <li><span class="label">History OPAC note:</span>[% opacnote FILTER html_line_break %]</li>
         </ol>

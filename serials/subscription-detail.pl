@@ -30,11 +30,10 @@ use C4::Search qw/enabled_staff_search_views/;
 use Date::Calc qw/Today Day_of_Year Week_of_Year Add_Delta_Days/;
 use Carp;
 
-my $query = new CGI;
+my $query = CGI->new;
 my $op = $query->param('op') || q{};
 my $issueconfirmed = $query->param('issueconfirmed');
-my $dbh = C4::Context->dbh;
-my ($template, $loggedinuser, $cookie, $hemisphere);
+my $hemisphere;
 my $subscriptionid = $query->param('subscriptionid');
 
 if ( $op and $op eq "close" ) {
@@ -47,42 +46,43 @@ my $subs = GetSubscription($subscriptionid);
 
 $subs->{enddate} = GetExpirationDate($subscriptionid);
 
-if ($op && $op eq 'del') {
-	if ($subs->{'cannotedit'}){
-		carp "Attempt to delete subscription $subscriptionid by ".C4::Context->userenv->{'id'}." not allowed";
-		print $query->redirect("/cgi-bin/koha/serials/subscription-detail.pl?subscriptionid=$subscriptionid");
-	}
-	DelSubscription($subscriptionid);
-	print "Content-Type: text/html\n\n<META HTTP-EQUIV=Refresh CONTENT=\"0; URL=serials-home.pl\"></html>";
-	exit;
+if ( $op eq 'del' ) {
+    if ( $subs->{cannotedit} ) {
+        carp "Attempt to delete subscription $subscriptionid by "
+          . C4::Context->userenv->{id}
+          . ' not allowed';
+        print $query->redirect(
+"/cgi-bin/koha/serials/subscription-detail.pl?subscriptionid=$subscriptionid"
+        );
+    }
+    DelSubscription($subscriptionid);
+    print
+"Content-Type: text/html\n\n<META HTTP-EQUIV=Refresh CONTENT=\"0; URL=serials-home.pl\"></html>";
+    exit;
 }
 
 my ($totalissues,@serialslist) = GetSerials($subscriptionid);
-$totalissues-- if $totalissues; # the -1 is to have 0 if this is a new subscription (only 1 issue)
-# the subscription must be deletable if there is NO issues for a reason or another (should not happend, but...)
+if ($totalissues) {
+# the -1 is to have 0 if this is a new subscription (only 1 issue)
+    --$totalissues;
+}
 
-# Permission needed if it is a deletion (del) : delete_subscription
-# Permission needed otherwise : *
-my $permission = ($op eq "del") ? "delete_subscription" : "*";
-
-($template, $loggedinuser, $cookie)
-= get_template_and_user({template_name => "serials/subscription-detail.tmpl",
+my ($template, $loggedinuser, $cookie)
+= get_template_and_user({template_name => 'serials/subscription-detail.tmpl',
                 query => $query,
-                type => "intranet",
+                type => 'intranet',
                 authnotrequired => 0,
-                flagsrequired => {serials => $permission},
+                flagsrequired => {serials => '*'},
                 debug => 1,
                 });
 
-$$subs{enddate} ||= GetExpirationDate($subscriptionid);
-
 if ($op eq 'del') {
-	if ($$subs{'cannotedit'}){
+	if ($subs->{cannotedit}){
 		carp "Attempt to delete subscription $subscriptionid by ".C4::Context->userenv->{'id'}." not allowed";
 		print $query->redirect("/cgi-bin/koha/serials/subscription-detail.pl?subscriptionid=$subscriptionid");
 		exit;
 	}
-	
+
     # Asking for confirmation if the subscription has not strictly expired yet or if it has linked issues
     my $strictlyexpired = HasSubscriptionStrictlyExpired($subscriptionid);
     my $linkedissues = CountIssues($subscriptionid);
@@ -93,11 +93,11 @@ if ($op eq 'del') {
 		if ($linkedissues     > 0) { $template->param("LINKEDISSUES" => 1); }
 		if ($countitems       > 0) { $template->param("LINKEDITEMS"  => 1); }
     } else {
-		$issueconfirmed = "1";
+		$issueconfirmed = 1;
     }
     # If it's ok to delete the subscription, we do so
-    if ($issueconfirmed eq "1") {
-		&DelSubscription($subscriptionid);
+    if ( $issueconfirmed && $issueconfirmed  == 1 ) {
+		DelSubscription($subscriptionid);
 		print "Content-Type: text/html\n\n<META HTTP-EQUIV=Refresh CONTENT=\"0; URL=serials-home.pl\"></html>";
 		exit;
     }

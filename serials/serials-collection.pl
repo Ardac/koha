@@ -22,6 +22,9 @@
 use strict;
 use warnings;
 use CGI;
+use DateTime;
+use DateTime::Format::MySQL;
+use Carp;
 use C4::Auth;
 use C4::Branch qw/GetBranchName/;
 use C4::Koha;
@@ -77,7 +80,13 @@ if($op eq 'gennext' && @subscriptionid){
             ) = GetNextSeq($subscription);
 
 	     ## We generate the next publication date
-	     my $nextpublisheddate = GetNextDate( $expected->{planneddate}->output('iso'), $subscription );
+         my $planned_dt = DateTime::Format::MySQL->parse_date(
+            $expected->{planneddate}->output('iso'));
+	     my $next_dt = GetNextDate( $planned_dt, $subscription );
+         my $nextpublisheddate;
+         if (defined $next_dt) {
+             $nextpublisheddate = DateTime::Format::MySQL->format_date($next_dt);
+         }
 	     ## Creating the new issue
 	     NewIssue( $newserialseq, $subscriptionid, $subscription->{'biblionumber'},
 	             1, $nextpublisheddate, $nextpublisheddate );
