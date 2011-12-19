@@ -99,7 +99,7 @@ function _MARC21FieldDoc(field) {
     if(field == 0) {
         window.open("http://www.loc.gov/marc/bibliographic/bdleader.html");
     } else if (field < 900) {
-        window.open("http://www.loc.gov/marc/bibliographic/bd" + ("000"+field).slice(-3) + ".html");
+        window.open("http://www4.fao.org/Documentation/cataloging/tag" + ("000"+field).slice(-3) + ".html");
     } else {
         window.open("http://www.loc.gov/marc/bibliographic/bd9xx.html");
     }
