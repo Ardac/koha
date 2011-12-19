@@ -309,12 +309,15 @@ function verify_images() {
             </li>
         [% END %]
         [% IF ( MARCSUBJCTS ) %]
-            <li><strong>Subjects:</strong> 
-            <ul>
-                [% FOREACH MARCSUBJCT IN MARCSUBJCTS %]
-                <li>[% FOREACH MARCSUBJECT_SUBFIELDS_LOO IN MARCSUBJCT.MARCSUBJECT_SUBFIELDS_LOOP %] [% MARCSUBJECT_SUBFIELDS_LOO.separator %] <a title="‡[% MARCSUBJECT_SUBFIELDS_LOO.code %] [% MARCSUBJECT_SUBFIELDS_LOO.value %]" href="/cgi-bin/koha/catalogue/search.pl?q=[% FOREACH link_loo IN MARCSUBJECT_SUBFIELDS_LOO.link_loop %][% link_loo.operator |url %][% link_loo.limit %]:[% link_loo.link |url %][% END %]">[% MARCSUBJECT_SUBFIELDS_LOO.value |html %]</a>[% END %]</li>
+            <li><strong>Subjects:</strong>
+                <!-- customize for agrovoc style subjects not loc -->
+                [% FOREACH MARCSUBJECT IN MARCSUBJCTS %]
+                    [% UNLESS loop.first %] --- [% END %]
+                    [% FOREACH MARCSUBJECT_SUBFIELDS_LOO IN MARCSUBJCT.MARCSUBJECT_SUBFIELDS_LOOP %]
+                    [% UNLESS loop.first %] --- [% END %]
+                    <a title="&#8225;[% MARCSUBJECT_SUBFIELDS_LOO.code %] [% MARCSUBJECT_SUBFIELDS_LOO.value %]" href="/cgi-bin/koha/catalogue/search.pl?q=[% FOREACH link_loo IN MARCSUBJECT_SUBFIELDS_LOO.link_loop %][% link_loo.operator |url %][% link_loo.limit %]:[% link_loo.link |url %][% END %]">[% MARCSUBJECT_SUBFIELDS_LOO.value |html %]</a>
                 [% END %]
-                </ul>
+                [% END %]
             </li>
         [% END %]
         [% IF ( copyrightdate ) %]
