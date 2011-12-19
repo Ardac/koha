@@ -98,11 +98,11 @@
 [% IF ( expanded_options ) %]
             <option value="au,phr">&nbsp;&nbsp;&nbsp;&nbsp; Author phrase</option>
             <option value="cpn,wrdl">&nbsp;&nbsp;&nbsp;&nbsp; Corporate name</option>
+            <option value="cpn,phr">&nbsp;&nbsp;&nbsp;&nbsp; Corporate Name Phrase</option>
             <option value="cfn,wrdl">&nbsp;&nbsp;&nbsp;&nbsp; Conference name</option>
             <option value="cfn,phr">&nbsp;&nbsp;&nbsp;&nbsp; Conference name phrase</option>
-            <option value="pn,wrdl">&nbsp;&nbsp;&nbsp;&nbsp; Personal name</option>
-            <option value="pn,phr">&nbsp;&nbsp;&nbsp;&nbsp; Personal name phrase</option>
 [% END %]
+            <option value="ln,rtrn">Language</option>
 [% IF ( expanded_options ) %]
             <option value="nt">Notes/Comments</option>
 [% END %]
@@ -124,6 +124,7 @@
             [% END %]
 [% ELSE %]
             <option value="nb">ISBN</option>
+            <option value="ns">ISSN</option>
 [% END %]
             <option value="bc">Barcode</option>
         </select>
@@ -214,6 +215,7 @@
 [% IF ( expanded_options ) %]
     [% IF ( usmarc ) %]
         <!-- SUBTYPE LIMITS -->
+[% IF NOT_FAO %]
             <div id="subtypes" class="container"><fieldset>
             <legend>Subtype limits</legend><select name="limit" class="subtype">
                 <option value="" selected="selected" class="menuheader">Any audience</option>
@@ -276,7 +278,40 @@
                     <option value="ctype:w">Law reports and digests</option>
                     <option value="ctype:z">Treaties </option>
                 </select>
-    
+[% ELSE %]
+            <div id="subtypes" class="container"><fieldset>
+            <legend>Subtype limits</legend><select name="limit" class="subtype">
+                <option value="" selected="selected" class="menuheader">Any Collection</option>
+                    <option value="Bib-level:m">Books</option>
+                    <option value="Bib-level:s">Serials</option>
+                </select>
+                <select name="limit" class="subtype">
+                    <option value="" >Additional content types</option>
+                    <option value="content:Summary" >Abstracts/summaries</option>
+                    <option value="content:Bibliography" >Bibliographies</option>
+                    <option value="content:Conference" >Conferences</option>
+                    <option value="content:Dictionary" >Dictionaries</option>
+                    <option value="content:Directory" >Directories</option>
+                    <option value="content:Documents" >Documents</option>
+                    <option value="content:Handbook" >Handbooks</option>
+                    <option value="content:Information" >Information</option>
+                    <option value="content:Legislation" >Legislation</option>
+                    <option value="content:Main Document" >Main Documents</option>
+                    <option value="content:Maps" >Maps</option>
+                    <option value="content:Monograph" >Monographs</option>
+                    <option value="content:Non-Conventional" >Non-Conventional</option>
+                    <option value="content:Numerical Data" >Numerical Data</option>
+                    <option value="content:Paper" >Papers</option>
+                    <option value="content:Publication" >Publications</option>
+                    <option value="content:Report" >Reports</option>
+                    <option value="content:Standard" >Standards</option>
+                    <option value="content:Thesaurus" >Thesauri</option>
+                    <option value="content:Theses" >Thesis</option>
+                    <option value="content:Website" >Websites</option>
+                    <option value="content:Working Paper" >Working Papers</option>
+                </select>
+
+[% END %]
     </fieldset></div>
     [% END %]
     [% IF ( UNIMARC ) %]
