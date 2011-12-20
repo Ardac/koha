@@ -123,15 +123,15 @@ function finderjumpfull(page)
                     <input type="hidden" name="and_or" value="and" />
                     <input type="hidden" name="excluding" value="" />
                     <select name="operator" id="mainmainentry">
-                        [% IF ( operator_mainstr == 'contains' ) %]
-                        <option value="contains" selected="selected">contains</option>
-                        [% ELSE %]
-                        <option value="contains">contains</option>
-                        [% END %]
                         [% IF ( operator_mainstr == 'start' ) %]
                         <option value="start" selected="selected">starts with</option>
                         [% ELSE %]
                         <option value="start">starts with</option>
+                        [% END %]
+                        [% IF ( operator_mainstr == 'contains' ) %]
+                        <option value="contains" selected="selected">contains</option>
+                        [% ELSE %]
+                        <option value="contains">contains</option>
                         [% END %]
                         [% IF ( operator_mainstr == 'is' ) %]
                         <option value="is" selected="selected">is exactly</option>
@@ -149,15 +149,15 @@ function finderjumpfull(page)
                     <input type="hidden" name="and_or" value="and" />
                     <input type="hidden" name="excluding" value="" />
                     <select name="operator" id="mainentry">
-                        [% IF ( operator_main == 'contains' ) %]
-                        <option value="contains" selected="selected">contains</option>
-                        [% ELSE %]
-                        <option value="contains">contains</option>
-                        [% END %]
                         [% IF ( operator_main == 'start' ) %]
                         <option value="start" selected="selected">starts with</option>
                         [% ELSE %]
                         <option value="start">starts with</option>
+                        [% END %]
+                        [% IF ( operator_main == 'contains' ) %]
+                        <option value="contains" selected="selected">contains</option>
+                        [% ELSE %]
+                        <option value="contains">contains</option>
                         [% END %]
                         [% IF ( operator_main == 'is' ) %]
                         <option value="is" selected="selected">is exactly</option>
@@ -175,15 +175,15 @@ function finderjumpfull(page)
                     <input type="hidden" name="and_or" value="and" />
                     <input type="hidden" name="excluding" value="" />
                     <select name="operator" id="marclistanywhere">
-                        [% IF ( operator_any == 'contains' ) %]
-                        <option value="contains" selected="selected">contains</option>
-                        [% ELSE %]
-                        <option value="contains">contains</option>
-                        [% END %]
                         [% IF ( operator_any == 'start' ) %]
                         <option value="start" selected="selected">starts with</option>
                         [% ELSE %]
                         <option value="start">starts with</option>
+                        [% END %]
+                        [% IF ( operator_any == 'contains' ) %]
+                        <option value="contains" selected="selected">contains</option>
+                        [% ELSE %]
+                        <option value="contains">contains</option>
                         [% END %]
                         [% IF ( operator_any == 'is' ) %]
                         <option value="is" selected="selected">is exactly</option>
@@ -200,15 +200,15 @@ function finderjumpfull(page)
                     <input type="hidden" name="and_or" value="and" />
                     <input type="hidden" name="excluding" value="" />
                     <select name="operator" id="marclistheading">
-                        [% IF ( operator_match == 'contains' ) %]
-                        <option value="contains" selected="selected">contains</option>
-                        [% ELSE %]
-                        <option value="contains">contains</option>
-                        [% END %]
                         [% IF ( operator_match == 'start' ) %]
                         <option value="start" selected="selected">starts with</option>
                         [% ELSE %]
                         <option value="start">starts with</option>
+                        [% END %]
+                        [% IF ( operator_match == 'contains' ) %]
+                        <option value="contains" selected="selected">contains</option>
+                        [% ELSE %]
+                        <option value="contains">contains</option>
                         [% END %]
                         [% IF ( operator_match == 'is' ) %]
                         <option value="is" selected="selected">is exactly</option>

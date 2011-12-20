@@ -42,15 +42,15 @@
         <input type="hidden" name="and_or" value="and" />
         <input type="hidden" name="excluding" value="" />
         <select name="operator">
-            [% IF ( operator == 'contains' ) %]
-            <option value="contains" selected="selected">contains</option>
-            [% ELSE %]
-            <option value="contains">contains</option>
-            [% END %]
             [% IF ( operator == 'start' ) %]
             <option value="start" selected="selected">starts with</option>
             [% ELSE %]
             <option value="start">starts with</option>
+            [% END %]
+            [% IF ( operator == 'contains' ) %]
+            <option value="contains" selected="selected">contains</option>
+            [% ELSE %]
+            <option value="contains">contains</option>
             [% END %]
             [% IF ( operator == 'is' ) %]
             <option value="is" selected="selected">is exactly</option>
