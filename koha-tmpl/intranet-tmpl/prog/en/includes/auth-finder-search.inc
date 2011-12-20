@@ -123,8 +123,8 @@ function finderjumpfull(page)
                     <input type="hidden" name="and_or" value="and" />
                     <input type="hidden" name="excluding" value="" />
                     <select name="operator" id="mainmainentry">
-                        <option value="contains">contains</option>
                         <option value="start">starts with</option>
+                        <option value="contains">contains</option>
                         <option value="is">is exactly</option>
                     </select>
                     <input id="value_mainstr" style="width:400px;" type="text" name="value_mainstr" value="[% value_mainstr |html %]" />
@@ -137,8 +137,8 @@ function finderjumpfull(page)
                     <input type="hidden" name="and_or" value="and" />
                     <input type="hidden" name="excluding" value="" />
                     <select name="operator" id="mainentry">
-                        <option value="contains">contains</option>
                         <option value="start">starts with</option>
+                        <option value="contains">contains</option>
                         <option value="is">is exactly</option>
                     </select>
                     <input id="value_main" style="width:400px;" type="text" name="value_main" value="[% value_main |html %]" />
@@ -151,8 +151,8 @@ function finderjumpfull(page)
                     <input type="hidden" name="and_or" value="and" />
                     <input type="hidden" name="excluding" value="" />
                     <select name="operator" id="marclistanywhere">
-                        <option value="contains">contains</option>
                         <option value="start">starts with</option>
+                        <option value="contains">contains</option>
                         <option value="is">is exactly</option>
                     </select>
                     <input id="value_any" style="width:400px;" type="text" name="value_any" value="[% value_any |html %]" />
@@ -164,8 +164,8 @@ function finderjumpfull(page)
                     <input type="hidden" name="and_or" value="and" />
                     <input type="hidden" name="excluding" value="" />
                     <select name="operator" id="marclistheading">
-                        <option value="contains">contains</option>
                         <option value="start">starts with</option>
+                        <option value="contains">contains</option>
                         <option value="is">is exactly</option>
                     </select>
                     <input type="text" name="value_match" value="[% value_match |html %]" />
