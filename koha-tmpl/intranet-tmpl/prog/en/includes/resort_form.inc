@@ -44,6 +44,7 @@
 <option value="pubdate_asc">Publication/Copyright date: oldest to newest</option>
 [% END %]
 
+<!--
 [% IF ( sort_by == "acqdate_dsc" ) %]
 <option value="acqdate_dsc" selected="selected">Acquisition date: newest to oldest</option>
 [% ELSE %]
@@ -56,6 +57,7 @@
 <option value="acqdate_asc">Acquisition date: oldest to newest</option>
  [% END %]
 </optgroup>
+-->
 
 <optgroup label="Title">
 	[% IF ( sort_by == "title_az" || sort_by == "title_asc" ) %]
