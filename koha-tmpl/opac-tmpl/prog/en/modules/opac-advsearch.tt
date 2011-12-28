@@ -326,7 +326,7 @@
 <div class="yui-u first">
 <!-- AVAILABILITY LIMITS -->
     [% UNLESS ( singleBranchMode ) %]
-    <div id="location" class="container"><fieldset><legend>Location: </legend>
+    <div id="location" class="container"><fieldset><legend>Holding Libraries: </legend>
 
         <label for="branchloop">Library:</label>
         <select name="limit" id="branchloop">
