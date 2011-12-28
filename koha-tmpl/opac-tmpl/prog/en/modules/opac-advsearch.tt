@@ -326,7 +326,7 @@
 <div class="yui-u first">
 <!-- AVAILABILITY LIMITS -->
     [% UNLESS ( singleBranchMode ) %]
-    <div id="location" class="container"><fieldset><legend>Location and availability: </legend>
+    <div id="location" class="container"><fieldset><legend>Location: </legend>
 
         <label for="branchloop">Library:</label>
         <select name="limit" id="branchloop">
@@ -348,7 +348,9 @@
                 [% END %]
                 </select>
         [% END %]        
+        <!--
         <div style="margin-top:.4em"><label for="available-items"><input type="checkbox" id="available-items" name="limit" value="available" /> Only items currently available for loan or reference</label></div>
+        -->
     </fieldset></div>
     [% END %]
 <!-- /AVAILABILITY LIMITS -->

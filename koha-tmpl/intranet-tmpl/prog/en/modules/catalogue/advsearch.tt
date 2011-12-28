@@ -229,14 +229,18 @@
 [% END %]
 
 <!-- AVAILABILITY LIMITS -->
+[% IF NOT_FAO %]
     <fieldset id="availability"><legend>Location and availability</legend>
 <fieldset id="currently-avail">
         <p><label for="available-items">Only items currently available</label> <input type="checkbox" id="available-items" name="limit" value="available" /></p>
 </fieldset>
+[% ELSE %]
+    <fieldset id="availability"><legend>Location</legend>
+[% END %]
 
 <fieldset id="select-libs">
-        <p><label for="branchloop">Individual libraries:</label><select name="limit" id="branchloop" onchange='if(this.value != ""){document.getElementById("categoryloop").disabled=true;} else {document.getElementById("categoryloop").disabled=false;}'>
-        <option value="">All libraries</option>
+        <p><label for="branchloop">Holding Libraries:</label><select name="limit" id="branchloop" onchange='if(this.value != ""){document.getElementById("categoryloop").disabled=true;} else {document.getElementById("categoryloop").disabled=false;}'>
+        <option value="">All Libraries</option>
         [% FOREACH branchloo IN branchloop %]
         [% IF ( branchloo.selected ) %]
         <option value="branch:[% branchloo.value %]" selected="selected">[% branchloo.branchname %]</option>

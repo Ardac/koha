@@ -1,20 +1,5 @@
 <option value="relevance">Relevance</option>
 
-<optgroup label="Popularity">
-	
-	[% IF ( sort_by == "popularity_dsc" ) %]
-<option value="popularity_dsc" selected="selected">Popularity (most to least)</option>
-[% ELSE %]
-    <option value="popularity_dsc">Popularity (most to least)</option>
- [% END %]
-[% IF ( sort_by == "popularity_asc" ) %]
-<option value="popularity_asc" selected="selected">Popularity (least to most)</option>
-[% ELSE %]
-    <option value="popularity_asc">Popularity (least to most)</option>
- [% END %]
-
-</optgroup>
-
 <optgroup label="Author">
 	
 	[% IF ( sort_by == "author_az" || sort_by == "author_asc" ) %]

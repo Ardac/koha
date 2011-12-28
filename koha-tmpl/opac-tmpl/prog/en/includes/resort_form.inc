@@ -1,4 +1,5 @@
 <option value="relevance">Relevance</option>
+<!--
 <optgroup label="Popularity">
 [% IF ( sort_by == "popularity_dsc" ) %]
 <option value="popularity_dsc" selected="selected">Popularity (most to least)</option>[% ELSE %]
@@ -9,6 +10,7 @@
 <option value="popularity_asc">Popularity (least to most)</option>
 [% END %]
 </optgroup>
+-->
 <optgroup label="Author">
 [% IF ( sort_by == "author_az" || sort_by == "author_asc" ) %]
 <option value="author_az" selected="selected">Author (A-Z)</option>
