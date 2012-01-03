@@ -32,9 +32,6 @@
     <option value="kw,Control-number">Accession Number</option>
     <option value="ln,rtrn">Language</option>
     <option value="nt">Notes/Comments</option>
-    [% IF (marcflavour != 'UNIMARC' ) %]
-        <option value="curriculum">Curriculum</option>
-    [% END %]
     <option value="pb">Publisher</option>
     <option value="pl">Publisher location</option>
     <option value="yr">Publication date (yyyy)</option>
