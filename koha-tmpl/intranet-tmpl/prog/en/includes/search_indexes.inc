@@ -1,27 +1,18 @@
 <select class="advsearch" name="idx">
     <option value="kw">Keyword</option>
     <option value="kw,phr">&nbsp;&nbsp;&nbsp;&nbsp; Keyword as phrase</option>
-    <option value="au">Author</option>
-    <option value="au,phr">&nbsp;&nbsp;&nbsp;&nbsp; Author as phrase</option>
-    <option value="cpn,phr">&nbsp;&nbsp;&nbsp;&nbsp; Corporate name as phrase</option>
-    <option value="cfn,phr">&nbsp;&nbsp;&nbsp;&nbsp; Conference name as phrase</option>
     <option value="ti">Title</option>
-    <option value="ti,phr">&nbsp;&nbsp;&nbsp;&nbsp; Title as phrase</option>
-    <option value="se">&nbsp;&nbsp;&nbsp;&nbsp; Series title</option>
+    <option value="ti,phr">&nbsp;&nbsp;&nbsp;&nbsp; Title as Phrase</option>
+    <option value="se">&nbsp;&nbsp;&nbsp;&nbsp; Series Title</option>
+    <option value="au">Author</option>
+    <option value="au,phr">&nbsp;&nbsp;&nbsp;&nbsp; Author as Phrase</option>
+    <option value="cpn">&nbsp;&nbsp;&nbsp;&nbsp; Corporate Author</option>
+    <option value="cfn,phr">&nbsp;&nbsp;&nbsp;&nbsp; Conference Author as Phrase</option>
+    <option value="cfn">&nbsp;&nbsp;&nbsp;&nbsp; Conference Name</option>
+    <option value="cfn,phr">&nbsp;&nbsp;&nbsp;&nbsp; Conference Name as Phrase</option>
+    <option value="pb">Publisher</option>
+    <option value="ln,rtrn">Language</option>
     <option value="su">Subject</option>
-    <option value="su,phr">&nbsp;&nbsp;&nbsp;&nbsp; Subject as phrase</option>
-    [% IF ( expanded_options ) %]
-        <option value="su-br">&nbsp;&nbsp;&nbsp;&nbsp; Subject and broader terms</option>
-        <option value="su-na">&nbsp;&nbsp;&nbsp;&nbsp; Subject and narrower terms</option>
-        <option value="su-rl">&nbsp;&nbsp;&nbsp;&nbsp; Subject and related terms</option>
-    [% END %]
-    <option value="bc">Barcode</option>
-    <option value="location">Shelving location</option>
-    [% IF (numbersphr) %]
-    <option value="sn,phr">Standard number</option>
-    [% ELSE %]
-    <option value="sn">Standard number</option>
-    [% END %]
     <option value="nb">&nbsp;&nbsp;&nbsp;&nbsp; ISBN</option>
     <option value="ns">&nbsp;&nbsp;&nbsp;&nbsp; ISSN</option>
     [% IF (numbersphr) %]
@@ -30,10 +21,6 @@
     <option value="callnum">&nbsp;&nbsp;&nbsp;&nbsp; Call number</option>
     [% END %]
     <option value="kw,Control-number">Accession Number</option>
-    <option value="ln,rtrn">Language</option>
-    <option value="nt">Notes/Comments</option>
-    <option value="pb">Publisher</option>
-    <option value="pl">Publisher location</option>
-    <option value="yr">Publication date (yyyy)</option>
-    <option value="acqdate">Acquisition date (yyyy-mm-dd)</option>
+    <option value="kw,Report-number">Report Number</option>
+    <option value="nt">Notes</option>
 </select>
