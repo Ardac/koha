@@ -907,10 +907,10 @@ YAHOO.util.Event.onContentReady("furtherm", function () {
 
 <ul>   
     [% IF ( defaulttab == 'holdings' ) %]<li id="tab_holdings" class="ui-tabs-selected">[% ELSE %]<li id="tab_holdings">[% END %]
-        <a href="#holdings">[% IF SeparateHoldings %][% LoginBranchname %] holdings[% ELSE %]Holdings[% END %] ( [% itemloop.size || 0 %] )</a>
+        <a href="#holdings">[% IF SeparateHoldings %][% LoginBranchname %] items[% ELSE %]Items[% END %] ( [% itemloop.size || 0 %] )</a>
     </li>
     [% IF (SeparateHoldings) %]
-        <li><a href="#otherholdings">Other holdings ( [% otheritemloop.size || 0 %] )</a></li>
+        <li><a href="#otherholdings">Other items ( [% otheritemloop.size || 0 %] )</a></li>
     [% END %]
 [% IF ( MARCNOTES || notes || ( SyndeticsEnabled && SyndeticsSummary && SYNDETICS_SUMMARY )) %]
     <li id="tab_descriptions"> <a href="#descriptions">Title notes</a></li>
@@ -946,7 +946,7 @@ YAHOO.util.Event.onContentReady("furtherm", function () {
 [% END %]
 [% IF ( subscriptionsnumber ) %]
     [% IF ( defaulttab == 'subscriptions' ) %]<li id="tab_subscriptions" class="ui-tabs-selected">[% ELSE %]<li id="tab_subscriptions">[% END %]
-        <a href="#subscriptions">Subscriptions</a>
+        <a href="#subscriptions">Holdings</a>
     </li>
 [% END %]
 [% IF ( Koha.Preference( 'reviewson' ) == 1 ) %]
@@ -1030,7 +1030,7 @@ YAHOO.util.Event.onContentReady("furtherm", function () {
 [% ELSE %]
     [% IF ( ALTERNATEHOLDINGS ) %]
     [% FOREACH ALTERNATEHOLDING IN ALTERNATEHOLDINGS %]
-        <div id="alternateholdings"><span class="holdings_label">Holdings:</span> [% ALTERNATEHOLDING.holding %]</div>
+        <div id="alternateholdings"><span class="holdings_label">Items:</span> [% ALTERNATEHOLDING.holding %]</div>
     [% END %]
     [% ELSE %]
     <div id="noitems">No physical items for this record</div>
@@ -1172,7 +1172,7 @@ YAHOO.util.Event.onContentReady("furtherm", function () {
         <tr>
             <th>Issue #</th>
             <th>Published Date</th>
-            <th>Status</th>
+            <!-- <th>Status</th> -->
             <th>Note</th>
         </tr>
             [% FOREACH latestserial IN subscription.latestserials %]
@@ -1181,6 +1181,7 @@ YAHOO.util.Event.onContentReady("furtherm", function () {
                 </td>
                 <td>    [% latestserial.planneddate %]
                 </td>
+<!--
                 <td>    [% IF ( latestserial.status1 ) %]Awaited
                     [% ELSE %]
                     [% IF ( latestserial.status2 ) %]Arrived
@@ -1196,6 +1197,7 @@ YAHOO.util.Event.onContentReady("furtherm", function () {
                     [% END %]
                     [% END %]
                 </td>
+-->
                 <td>    [% latestserial.notes %]
                 </td>
             </tr>
