@@ -208,7 +208,7 @@
         [% END %]
         
         <select name="limit" class="subtype">
-            <option value="" >Additional content types</option>
+            <option value="" >All content types</option>
             <option value="content:Summary" >Abstracts/summaries</option>
             <option value="content:Bibliography" >Bibliographies</option>
             <option value="content:Conference" >Conferences</option>

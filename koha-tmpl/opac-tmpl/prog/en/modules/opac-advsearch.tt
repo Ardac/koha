@@ -263,7 +263,7 @@
                     <option value="Bib-level:s">Serials</option>
                 </select>
                 <select name="limit" class="subtype">
-                    <option value="" >Additional content types</option>
+                    <option value="" >Any content types</option>
                     <option value="content:Summary" >Abstracts/summaries</option>
                     <option value="content:Bibliography" >Bibliographies</option>
                     <option value="content:Conference" >Conferences</option>
