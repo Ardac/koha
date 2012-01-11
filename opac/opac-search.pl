@@ -412,6 +412,7 @@ foreach my $limit(@limits) {
 }
 $template->param(available => $available);
 
+
 # append year limits if they exist
 if ($params->{'limit-yr'}) {
     if ($params->{'limit-yr'} =~ /\d{4}-\d{4}/) {
@@ -859,6 +860,18 @@ $template->param(
 
 if ($query_desc || $limit_desc) {
     $template->param(searchdesc => 1);
+}
+if (!$limit_desc || $limit_desc !~/Bib-level/) {
+    my $p = $limit_desc || q{};
+    if ($p) {
+        $p = '&limit=' . $p;
+    }
+    $template->param(
+        collections      => 1,
+        limit_cgi_mono   => $p . '&limit=Bib-level:m',
+        limit_cgi_serial => $p . '&limit=Bib-level:s'
+    );
+
 }
 
 # VI. BUILD THE TEMPLATE
