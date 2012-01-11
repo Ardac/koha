@@ -3,11 +3,7 @@
 <div id="search-facets">
 <h4>Refine your search</h4>
 <ul>
-<!--
-    <li id="availability_facet">Availability<ul><li>[% IF ( available ) %]Showing only <strong>available</strong> items. <a href="/cgi-bin/koha/opac-search.pl?[% query_cgi |html %][% limit_cgi_not_availablity %][% IF ( sort_by ) %]&amp;sort_by=[% sort_by |html%][% END %]">Show all items</a>[% ELSE %]Limit to <a href="/cgi-bin/koha/opac-search.pl?[% query_cgi |html %][% limit_cgi |html %][% IF ( sort_by ) %]&amp;sort_by=[% sort_by |html%][% END %]&amp;limit=available">currently available items.</a>[% END %]</li></ul>
-	[% IF ( related ) %] <li>(related searches: [% FOREACH relate IN related %][% relate.related_search %][% END %])</li>[% END %]
-	</li>
--->
+
 [% FOREACH facets_loo IN facets_loop %]
 [% IF facets_loo.facets.size > 0 %]
 <li id="[% facets_loo.type_id %]">
@@ -27,6 +23,20 @@
 [% END %]
 </ul></li>
 [% END %]
+[% IF collections %]
+<li>
+Collections
+<ul>
+    <li>
+    <a href="/cgi-bin/koha/opac-search.pl?[% query_cgi  %][% limit_cgi_mono  %][% IF sort_by %]&amp;sort_by=[% sort_by %][% END %]" title="Restrict to monographs"</a>
+    Monograph Titles
+    </li>
+    <li>
+    <a href="/cgi-bin/koha/opac-search.pl?[% query_cgi  %][% limit_cgi_serial  %][% IF sort_by %]&amp;sort_by=[% sort_by %][% END %]" title="Restrict to serials"</a>
+    Serials Titles
+    </li>
+</ul>
+</li>
 [% END %]
 </ul>
 </div>
