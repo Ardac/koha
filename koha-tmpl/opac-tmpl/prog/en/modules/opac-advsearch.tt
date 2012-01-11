@@ -77,27 +77,26 @@
             <option value="kw">Keyword</option>
             <option value="ti">Title</option>
 [% IF  expanded_options  %]
-            <option value="ti,phr">&nbsp;&nbsp;&nbsp;&nbsp; Title Phrase</option>
+            <option value="ti,phr">Title Phrase</option>
             <option value="se,wrdl">Series Title</option>
             <option value="callnum">Call Number</option>
 [% END %]
             <option value="au,wrdl">Author</option>
             
 [% IF expanded_options %]
-            <option value="au,phr">&nbsp;&nbsp;&nbsp;&nbsp; Author Phrase</option>
-            <option value="cpn,wrdl">&nbsp;&nbsp;&nbsp;&nbsp; Corporate Name</option>
-            <option value="cpn,phr">&nbsp;&nbsp;&nbsp;&nbsp; Corporate Name Phrase</option>
-            <option value="cfn,wrdl">&nbsp;&nbsp;&nbsp;&nbsp; Conference Name</option>
-            <option value="cfn,phr">&nbsp;&nbsp;&nbsp;&nbsp; Conference Name Phrase</option>
+            <option value="au,phr">Author Phrase</option>
+            <option value="cpn,wrdl">Corporate Name</option>
+            <option value="cpn,phr">Corporate Name Phrase</option>
+            <option value="cfn,wrdl">Conference Name</option>
+            <option value="cfn,phr">Conference Name Phrase</option>
 [% END %]
             <option value="pb,wrdl">Publisher</option>
             <option value="ln,rtrn">Language</option>
             <option value="su,wrdl">Subject</option>
 [% IF expanded_options %]
-            <option value="sn">Standard Number</option>
-            <option value="nb">&nbsp;&nbsp;&nbsp;&nbsp; ISBN</option>
-            <option value="ns">&nbsp;&nbsp;&nbsp;&nbsp; ISSN</option>
-            <option value="lcn,phr">&nbsp;&nbsp;&nbsp;&nbsp; Call Number</option>
+            <option value="nb">ISBN</option>
+            <option value="ns">ISSN</option>
+            <option value="lcn,phr">Call Number</option>
             <option value="kw,Control-number">Accession Number</option>
             <option value="kw,Report-number">Report Number</option>
             <option value="nt">Notes/Comments</option>
