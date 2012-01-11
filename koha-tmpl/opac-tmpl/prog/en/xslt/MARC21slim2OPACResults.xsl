@@ -1027,6 +1027,7 @@
                             </xsl:for-each>
                             </span>
                         </xsl:if>
+                        <!--
                         <span class="results_summary availability">
                         <span class="label">Availability: </span>
                         <xsl:choose>
@@ -1178,6 +1179,7 @@
             </span>
         </xsl:when>
        </xsl:choose>
+               -->
     </xsl:template>
 
     <xsl:template name="nameABCQ">
