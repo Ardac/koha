@@ -79,7 +79,6 @@
 [% IF  expanded_options  %]
             <option value="ti,phr">Title Phrase</option>
             <option value="se,wrdl">Series Title</option>
-            <option value="callnum">Call Number</option>
 [% END %]
             <option value="au,wrdl">Author</option>
             
