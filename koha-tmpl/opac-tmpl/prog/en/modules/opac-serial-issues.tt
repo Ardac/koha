@@ -100,12 +100,6 @@
       [% subscription_LOO.recievedlist %]
     </p>
   [% END %]
-  [% IF ( subscription_LOO.missinglist ) %]
-    <h5>Unavailable issues</h5>
-    <p>
-      [% subscription_LOO.missinglist %]
-    </p>
-  [% END %]
     [% IF ( subscription_LOO.opacnote ) %]
         <h5>Issues summary</h5>
         <p>
