@@ -85,10 +85,12 @@
 
 <!-- SEARCH BUTTONS -->
             <fieldset class="action" id="submit1"><input class="submit" type="submit" accesskey="s" value="Search" />
+            [% IF NOT_FAO %]
             [% IF ( expanded_options ) %]
             <a href="/cgi-bin/koha/catalogue/search.pl?expanded_options=0">[Fewer options]</a>
             [% ELSE %]
             <a href="/cgi-bin/koha/catalogue/search.pl?expanded_options=1">[More options]</a>
+            [% END %]
             [% END %]
             <a href="/cgi-bin/koha/catalogue/search.pl?do=Clear">[New search]</a>
             </fieldset>
@@ -284,10 +286,12 @@
 
 <!-- SEARCH BUTTONS -->
             <fieldset class="action" id="submit2"><input class="submit" type="submit" accesskey="s" value="Search" />
+            [% IF NOT_FAO %]
             [% IF ( expanded_options ) %]
             <a href="/cgi-bin/koha/catalogue/search.pl?expanded_options=0">[Fewer options]</a>
             [% ELSE %]
             <a href="/cgi-bin/koha/catalogue/search.pl?expanded_options=1">[More options]</a>
+            [% END %]
             [% END %]
             <a href="/cgi-bin/koha/catalogue/search.pl?do=Clear">[New search]</a> 
             </fieldset>

@@ -306,12 +306,6 @@ if ( $template_type && $template_type eq 'advsearch' ) {
     if ( C4::Context->preference("expandedSearchOption") == 1 ) {
         $template->param( expanded_options => C4::Context->preference("expandedSearchOption") );
     }
-    # but let the user override it
-    if (defined $cgi->param('expanded_options')) {
-        if ( ($cgi->param('expanded_options') == 0) || ($cgi->param('expanded_options') == 1 ) ) {
-            $template->param( expanded_options => $cgi->param('expanded_options'));
-        }
-    }
 
     if (C4::Context->preference('OPACNumbersPreferPhrase')) {
         $template->param('numbersphr' => 1);
