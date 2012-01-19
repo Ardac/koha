@@ -120,12 +120,14 @@
 <div class="yui-g"><div class="container" style="text-align: center;"><!-- SEARCH BUTTONS -->
 
     <input class="submit" type="submit" accesskey="s" name="do" title="Search" value="Search" />
+    [% IF NOT_FAO %]
     [% IF ( expanded_options ) %]
         <a href="/cgi-bin/koha/opac-search.pl?expanded_options=0">[Fewer options]</a>
     [% ELSE %]
         <a href="/cgi-bin/koha/opac-search.pl?expanded_options=1">[More options]</a>
     [% END %]
-    <a href="/cgi-bin/koha/opac-search.pl?do=Clear">[New search]</a>
+    [% END %]
+    <a href="/cgi-bin/koha/opac-search.pl?do=Clear">[New Search]</a>
 
 <!-- /SEARCH BUTTONS --></div></div>
 <div class="yui-g">
@@ -344,12 +346,14 @@
 <div class="yui-g"><div class="container" style="text-align: center;"><!-- SEARCH BUTTONS -->
 
     <input class="submit" type="submit" accesskey="s" name="do" title="Search" value="Search" />
+    [% IF NOT_FAO %]
     [% IF ( expanded_options ) %]
         <a href="/cgi-bin/koha/opac-search.pl?expanded_options=0">[Fewer options]</a>
     [% ELSE %]
         <a href="/cgi-bin/koha/opac-search.pl?expanded_options=1">[More options]</a>
     [% END %]
-    <a href="/cgi-bin/koha/opac-search.pl?do=Clear">[New search]</a>
+    [% END %]
+    <a href="/cgi-bin/koha/opac-search.pl?do=Clear">[New Search]</a>
 
 <!-- /SEARCH BUTTONS --></div></div>
 </form>
