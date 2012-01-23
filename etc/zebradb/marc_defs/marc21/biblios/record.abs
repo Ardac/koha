@@ -88,6 +88,7 @@ melm 060        NLM-call-number
 melm 070        NAL-call-number
 melm 080        UDC-classification
 melm 082        Dewey-classification:w,Dewey-classification:s
+melm 084$9      Koha-Auth-Number
 melm 086        Number-govt-pub
 #melm 942$k     LC-card-number:s
 
