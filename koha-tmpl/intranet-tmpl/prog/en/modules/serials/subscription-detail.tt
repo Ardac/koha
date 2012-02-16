@@ -91,6 +91,9 @@ $(document).ready(function() {
     <li><a href="#subscription_planning">Planning</a></li>
     <li><a href="#subscription_issues">Issues</a></li>
     <li><a href="#subscription_summary">Summary</a></li>
+    [% IF orders %]
+    <li><a href="#subscription_orders">Related orders</a></li>
+    [% END %]
 </ul>
 
 <div id="subscription_info">
@@ -423,6 +426,20 @@ $(document).ready(function() {
 
 
 
+    <div id="subscription_orders">
+    <div class="yui-g">
+    <div class="rows">
+    <ol>
+        [% FOREACH order IN orders %]
+        <li><span class="label">[% order.purchaseordernumber -%]:</span>
+        <a href="/cgi-bin/koha/basket.pl?basketno=[% order.basketno -%]"> ([% order.basketno -%]) </a>
+        </li>
+        [% END %]
+    </ol>
+    </div>
+    </div>
+    </div>
+    </div>
 </div>
 </div>
 
