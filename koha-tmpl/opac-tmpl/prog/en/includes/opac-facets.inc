@@ -28,11 +28,11 @@
 Collections
 <ul>
     <li>
-    <a href="/cgi-bin/koha/opac-search.pl?[% query_cgi  %][% limit_cgi_mono  %][% IF sort_by %]&amp;sort_by=[% sort_by %][% END %]" title="Restrict to monographs"</a>
+    <a href="/cgi-bin/koha/opac-search.pl?[% query_cgi |html %][% limit_cgi_mono |html %][% IF sort_by %]&amp;sort_by=[% sort_by %][% END %]" title="Restrict to monographs"</a>
     Monograph Titles
     </li>
     <li>
-    <a href="/cgi-bin/koha/opac-search.pl?[% query_cgi  %][% limit_cgi_serial  %][% IF sort_by %]&amp;sort_by=[% sort_by %][% END %]" title="Restrict to serials"</a>
+    <a href="/cgi-bin/koha/opac-search.pl?[% query_cgi |html  %][% limit_cgi_serial |html  %][% IF sort_by %]&amp;sort_by=[% sort_by %][% END %]" title="Restrict to serials"</a>
     Serials Titles
     </li>
 </ul>
