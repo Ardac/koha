@@ -292,7 +292,7 @@ $(document).ready(function() {
                     [% serial.publisheddate %]
                 </td>
                 <td>
-                    [% serial.planneddate %]
+                    [% serial.receiveddate %]
                 </td>
                 <td>
                     [% serial.serialseq %]

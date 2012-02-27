@@ -364,6 +364,7 @@ sub GetFullSubscription {
             serial.serialseq,
             serial.planneddate, 
             serial.publisheddate, 
+            serial.receiveddate,
             serial.status, 
             serial.notes as notes,
             year(IF(serial.publisheddate="00-00-0000",serial.planneddate,serial.publisheddate)) as year,
@@ -420,7 +421,7 @@ sub PrepareSerialsData {
     my $previousnote = "";
 
     foreach my $subs (@{$lines}) {
-        for my $datefield ( qw(publisheddate planneddate) ) {
+        for my $datefield ( qw(publisheddate planneddate receiveddate) ) {
             # handle both undef and undef returned as 0000-00-00
             if (!defined $subs->{$datefield} or $subs->{$datefield}=~m/^00/) {
                 $subs->{$datefield} = 'XXX';
@@ -529,6 +530,7 @@ sub GetFullSubscriptionsFromBiblionumber {
   SELECT    serial.serialid,
             serial.serialseq,
             serial.planneddate, 
+            serial.receiveddate,
             serial.publisheddate, 
             serial.status, 
             serial.notes as notes,
@@ -746,16 +748,17 @@ sub GetSerials {
     my $counter = 0;
     $count = 5 unless ($count);
     my @serials;
-    my $query = "SELECT serialid,serialseq, status, publisheddate, planneddate,notes, routingnotes
+    my $query =
+    q|SELECT serialid,serialseq, status, publisheddate, planneddate,notes, routingnotes, receiveddate
                         FROM   serial
                         WHERE  subscriptionid = ? AND status NOT IN (2,4,5) 
-                        ORDER BY IF(publisheddate<>'0000-00-00',publisheddate,planneddate) DESC";
+                        ORDER BY IF(publisheddate<>'0000-00-00',publisheddate,planneddate) DESC|;
     my $sth = $dbh->prepare($query);
     $sth->execute($subscriptionid);
 
     while ( my $line = $sth->fetchrow_hashref ) {
         $line->{ "status" . $line->{status} } = 1;                                         # fills a "statusX" value, used for template status select list
-        for my $datefield ( qw( planneddate publisheddate) ) {
+        for my $datefield ( qw( planneddate publisheddate receiveddate) ) {
             if ($line->{$datefield} && $line->{$datefield}!~m/^00/) {
                 $line->{$datefield} = format_date( $line->{$datefield});
             } else {
@@ -766,18 +769,18 @@ sub GetSerials {
     }
 
     # OK, now add the last 5 issues arrives/missing
-    $query = "SELECT   serialid,serialseq, status, planneddate, publisheddate,notes, routingnotes
+    $query =
+    q|SELECT   serialid,serialseq, status, planneddate, publisheddate,notes, routingnotes, receiveddate
        FROM     serial
        WHERE    subscriptionid = ?
        AND      (status in (2,4,5))
-       ORDER BY IF(publisheddate<>'0000-00-00',publisheddate,planneddate) DESC
-      ";
+       ORDER BY IF(publisheddate<>'0000-00-00',publisheddate,planneddate) DESC|;
     $sth = $dbh->prepare($query);
     $sth->execute($subscriptionid);
     while ( ( my $line = $sth->fetchrow_hashref ) && $counter < $count ) {
         $counter++;
         $line->{ "status" . $line->{status} } = 1;                                         # fills a "statusX" value, used for template status select list
-        for my $datefield ( qw( planneddate publisheddate) ) {
+        for my $datefield ( qw( planneddate publisheddate receiveddate) ) {
             if ($line->{$datefield} && $line->{$datefield}!~m/^00/) {
                 $line->{$datefield} = format_date( $line->{$datefield});
             } else {
@@ -807,12 +810,11 @@ this number is used to see if a subscription can be deleted (=it must have only 
 sub GetSerials2 {
     my ( $subscription, $status ) = @_;
     my $dbh   = C4::Context->dbh;
-    my $query = qq|
-                 SELECT   serialid,serialseq, status, planneddate, publisheddate,notes, routingnotes
+    my $query =
+    q|SELECT   serialid,serialseq, status, planneddate, publisheddate,notes, routingnotes, receiveddate
                  FROM     serial 
                  WHERE    subscriptionid=$subscription AND status IN ($status)
-                 ORDER BY publisheddate,serialid DESC
-                    |;
+                 ORDER BY publisheddate,serialid DESC|;
     $debug and warn "GetSerials2 query: $query";
     my $sth = $dbh->prepare($query);
     $sth->execute;
@@ -821,7 +823,7 @@ sub GetSerials2 {
     while ( my $line = $sth->fetchrow_hashref ) {
         $line->{ "status" . $line->{status} } = 1; # fills a "statusX" value, used for template status select list
         # Format dates for display
-        for my $datefield ( qw( planneddate publisheddate ) ) {
+        for my $datefield ( qw( planneddate publisheddate receiveddate ) ) {
             if ($line->{$datefield} =~m/^00/) {
                 $line->{$datefield} = q{};
             }
@@ -1127,19 +1129,32 @@ sub ModSerialStatus {
     # change status & update subscriptionhistory
     my $val;
     if ( $status == 6 ) {
-        DelIssue( {'serialid'=>$serialid, 'subscriptionid'=>$subscriptionid,'serialseq'=>$serialseq} );
+        DelIssue(
+            {
+                'serialid'       => $serialid,
+                'subscriptionid' => $subscriptionid,
+                'serialseq'      => $serialseq
+            }
+        );
     }
     else {
-        my $query =
+        my $query;
+        if ( $status == 2 && $status != $oldstatus ) {
+            $query =
+'UPDATE serial SET serialseq=?,publisheddate=?,receiveddate=?,status=?,notes=? WHERE  serialid = ?';
+        }
+        else {
+            $query =
 'UPDATE serial SET serialseq=?,publisheddate=?,planneddate=?,status=?,notes=? WHERE  serialid = ?';
+        }
         $sth = $dbh->prepare($query);
         $sth->execute( $serialseq, $publisheddate, $planneddate, $status, $notes, $serialid );
-        $query = "SELECT * FROM   subscription WHERE  subscriptionid = ?";
+        $query = 'SELECT * FROM subscription WHERE subscriptionid = ?';
         $sth   = $dbh->prepare($query);
         $sth->execute($subscriptionid);
         my $val = $sth->fetchrow_hashref;
         unless ( $val->{manualhistory} ) {
-            $query = "SELECT missinglist,recievedlist FROM subscriptionhistory WHERE  subscriptionid=?";
+            $query = 'SELECT missinglist,recievedlist FROM subscriptionhistory WHERE subscriptionid=?';
             $sth   = $dbh->prepare($query);
             $sth->execute($subscriptionid);
             my ( $missinglist, $recievedlist ) = $sth->fetchrow;
@@ -1493,20 +1508,23 @@ sub NewIssue {
     ### FIXME biblionumber CAN be provided by subscriptionid. So Do we STILL NEED IT ?
 
     my $dbh   = C4::Context->dbh;
-    my $query = qq|
-        INSERT INTO serial
-            (serialseq,subscriptionid,biblionumber,status,publisheddate,planneddate,notes)
-        VALUES (?,?,?,?,?,?,?)
-    |;
-    my $sth = $dbh->prepare($query);
-    $sth->execute( $serialseq, $subscriptionid, $biblionumber, $status, $publisheddate, $planneddate, $notes );
-    my $serialid = $dbh->{'mysql_insertid'};
-    $query = qq|
+    my $serialid;
+    if ( $status != 2 ) {
+        $serialid =
+          insert_new_serial( $serialseq, $subscriptionid, $biblionumber,
+            $status, $planneddate, $publisheddate, $notes );
+    }
+    else {
+        $serialid = insert_new_received_serial( $serialseq, $subscriptionid,
+            $biblionumber, $status, $planneddate, $publisheddate, $notes );
+    }
+
+    my $query = q|
         SELECT missinglist,recievedlist
         FROM   subscriptionhistory
         WHERE  subscriptionid=?
     |;
-    $sth = $dbh->prepare($query);
+    my $sth = $dbh->prepare($query);
     $sth->execute($subscriptionid);
     my ( $missinglist, $recievedlist ) = $sth->fetchrow;
 
@@ -1529,6 +1547,38 @@ sub NewIssue {
     $missinglist  =~ s/^; //;
     $sth->execute( $recievedlist, $missinglist, $subscriptionid );
     return $serialid;
+}
+
+sub insert_new_serial {
+    my ( $serialseq, $subscriptionid, $biblionumber, $status, $planneddate,
+        $publisheddate, $notes )
+      = @_;
+    my $dbh   = C4::Context->dbh;
+    my $query = q|
+        INSERT INTO serial
+        (serialseq,subscriptionid,biblionumber,status,publisheddate,planneddate,notes)
+        VALUES (?,?,?,?,?,?,?)
+        |;
+    my $sth = $dbh->prepare($query);
+    $sth->execute( $serialseq, $subscriptionid, $biblionumber, $status,
+        $publisheddate, $planneddate, $notes );
+    return $dbh->{mysql_insertid};
+}
+
+sub insert_new_received_serial {
+    my ( $serialseq, $subscriptionid, $biblionumber, $status, $planneddate,
+        $publisheddate, $notes )
+      = @_;
+    my $dbh   = C4::Context->dbh;
+    my $query = q|
+        INSERT INTO serial
+        (serialseq,subscriptionid,biblionumber,status,publisheddate,planneddate,notes, receiveddate)
+        VALUES (?,?,?,?,?,?,?,?)
+        |;
+    my $sth = $dbh->prepare($query);
+    $sth->execute( $serialseq, $subscriptionid, $biblionumber, $status,
+        $publisheddate, $planneddate, $notes, $planneddate );
+    return $dbh->{mysql_insertid};
 }
 
 =head2 ItemizeSerials
