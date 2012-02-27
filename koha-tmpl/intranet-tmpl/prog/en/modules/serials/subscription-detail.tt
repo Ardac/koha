@@ -335,6 +335,7 @@ $(document).ready(function() {
             <th>Issue number</th>
             <th>Planned date</th>
             <th>Published date</th>
+            <th>Received date</th>
             <th>Status</th>
         </tr>
         [% FOREACH serialslis IN serialslist %]
