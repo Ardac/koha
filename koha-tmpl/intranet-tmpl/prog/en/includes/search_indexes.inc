@@ -20,7 +20,7 @@
     [% ELSE %]
     <option value="callnum">Call Number</option>
     [% END %]
-    <option value="kw,Control-number">Accession Number</option>
+    <option value="acce">Accession Number</option>
     <option value="kw,Report-number">Report Number</option>
     <option value="nt">Notes</option>
 </select>
