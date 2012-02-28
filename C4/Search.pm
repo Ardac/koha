@@ -1376,7 +1376,7 @@ sub buildQuery {
 					$stemming = $auto_truncation = $weight_fields = $fuzzy_enabled = $remove_stopwords = 0;
                 }
                 # ISBN,ISSN,Standard Number, don't need special treatment
-                elsif ( $index eq 'nb' || $index eq 'ns' ) {
+                elsif ( $index eq 'nb' || $index eq 'ns' || $index eq 'acce' ) {
                     (
                         $stemming,      $auto_truncation,
                         $weight_fields, $fuzzy_enabled,
