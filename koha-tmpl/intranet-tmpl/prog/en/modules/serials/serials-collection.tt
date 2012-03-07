@@ -57,6 +57,37 @@ function CheckNone( node ) {
     $("#"+node).unCheckCheckboxes();
     return false;
 }
+function deleteYear( subscriptionid, year ) {
+    //alert("id = " + subscriptionid + " year = " + year);
+    var ok;
+    $.ajax({
+        url: "/cgi-bin/koha/serials/delete_serials_ajax.pl",
+        async: false,
+        data: {
+            subscriptionid: subscriptionid,
+            year: year
+        },
+        dataType: 'json',
+        error: function(xhr) {
+            alert("Error:\n" + xhr.respobseText);
+        },
+        success: function(json) {
+            var id_str = "subscription-year-" + year;
+            var yearDiv = document.getElementById(id_str);
+            var tableElem = yearDiv.getElementsByTagName("table"); //should just be one
+            var body = tableElem[0].getElementsByTagName("tbody");
+            var trs = body[0].getElementsByTagName("tr");
+            var row = trs.length;
+            while ( --row > 0) { // row 0 is header
+               var parent = trs[row].parentNode;
+               parent.removeChild(trs[row]);
+            }
+            ok = 1;
+        },
+     });
+
+}
+
 $(document).ready(function() {
     $('#subscription_years').tabs();
     [% IF dateformat == "metric" %]
@@ -322,6 +353,10 @@ $(document).ready(function() {
           [% END %]
         </tbody>
       </table>
+      <p><input type="submit" value="Edit serials" />&nbsp;
+         <input type="button" value="Generate Next" onclick="javascript:generateNext([% subscriptionidlist %])" />&nbsp;
+         <input type="button" value="Delete [% year.year %] issues" onclick="deleteYear( [% subscriptionidlist %],[% year.year %] );" />
+      </p>
     </div>
     [% END %]
   <input type="hidden" name="subscriptionid" value="[% subscriptionidlist %]" />

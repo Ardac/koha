@@ -59,6 +59,7 @@ BEGIN {
       &subscriptionCurrentlyOnOrder
 
     );
+    @EXPORT_OK = qw( DelIssue );
 }
 
 =head1 NAME
