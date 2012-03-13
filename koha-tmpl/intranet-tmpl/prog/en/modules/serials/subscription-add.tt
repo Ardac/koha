@@ -1000,6 +1000,21 @@ $(document).ready(function() {
 	    [% IF ( subscriptionid ) %]
         <li><span class="label">Subscription #</span> [% subscriptionid %]</li>
         [% END %]
+        [% IF closed == 'Y' %]
+        <li>
+        <label for="closed_text" class="required">Status:</label>
+        <span name="closed_text" class="required">
+           <em>This subscription is closed</em>
+        </span>
+        </li>
+        [% ELSIF closed == 'E' %]
+        <li>
+        <label for="closed_text" class="required">Status:</label>
+        <span name="closed_text" class="required">
+           <em>This subscription is expired</em>
+        </span>
+        </li>
+        [% END %]
         <li>
             <label for="aqbooksellerid">Vendor: </label>
             <input type="text" name="aqbooksellerid" id="aqbooksellerid" value="[% aqbooksellerid %]" size="8" /> (<input type="text" name="aqbooksellername" value="[% aqbooksellername %]" disabled="disabled" readonly="readonly" />) <a href="#" onclick="FindAcqui(f)">Search for a vendor</a>
@@ -1310,6 +1325,15 @@ $(document).ready(function() {
                 <input type="text" name="enddate" value="[% enddate %]" size="13" maxlength="10" id="to" class="datepickerto" />
         </li>
     <li><label for="numberingmethod">Numbering formula:</label> <input type="text" name="numberingmethod" id="numberingmethod" value="[% numberingmethod %]" />
+    </li>
+    <li>
+        [% IF closed == 'Y' %]
+        <label for="closed">Reopen Subscription:</label>
+        <input type="checkbox" name="closed" value="close" />
+        [% ELSE %]
+        <label for="closed">Close/Cancel Subscription:</label>
+        <input type="checkbox" name="closed" value="open" />
+        [% END %]
     </li>
     </ol>
 
