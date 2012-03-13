@@ -331,6 +331,12 @@ sub redirect_mod_subscription {
     my $graceperiod     = $query->param('graceperiod') || 0;
     my $location = $query->param('location');
     my $nextexpected = GetNextExpected($subscriptionid);
+    my $closed = $query->param('closed');
+    if ($closed && $closed eq 'close') {
+        $closed = 'Y';
+    } else {
+        $closed = 'N';
+    }
 	#  If it's  a mod, we need to check the current 'expected' issue, and mod it in the serials table if necessary.
     if ( $nextacquidate ne $nextexpected->{planneddate}->output('iso') ) {
         ModNextExpected($subscriptionid,C4::Dates->new($nextacquidate,'iso'));
@@ -339,17 +345,31 @@ sub redirect_mod_subscription {
     }
 
         ModSubscription(
-            $auser,           $branchcode,   $aqbooksellerid, $cost,
-            $aqbudgetid,      $startdate,    $periodicity,    $firstissuedate,
-            $dow,             join(q{,},@irregularity), $numberpattern,  $numberlength,
-            $weeklength,      $monthlength,  $add1,           $every1,
-            $whenmorethan1,   $setto1,       $lastvalue1,     $innerloop1,
-            $add2,            $every2,       $whenmorethan2,  $setto2,
-            $lastvalue2,      $innerloop2,   $add3,           $every3,
-            $whenmorethan3,   $setto3,       $lastvalue3,     $innerloop3,
-            $numberingmethod, $status,       $biblionumber,   $callnumber,
-            $notes,           $letter,       $hemisphere,     $manualhistory,$internalnotes,
-            $serialsadditems, $staffdisplaycount,$opacdisplaycount,$graceperiod,$location,$enddate,$subscriptionid
+            $auser,          $branchcode,
+            $aqbooksellerid, $cost,
+            $aqbudgetid,     $startdate,
+            $periodicity,    $firstissuedate,
+            $dow,               join( q{,}, @irregularity ),
+            $numberpattern,     $numberlength,
+            $weeklength,        $monthlength,
+            $add1,              $every1,
+            $whenmorethan1,     $setto1,
+            $lastvalue1,        $innerloop1,
+            $add2,              $every2,
+            $whenmorethan2,     $setto2,
+            $lastvalue2,        $innerloop2,
+            $add3,              $every3,
+            $whenmorethan3,     $setto3,
+            $lastvalue3,        $innerloop3,
+            $numberingmethod,   $status,
+            $biblionumber,      $callnumber,
+            $notes,             $letter,
+            $hemisphere,        $manualhistory,
+            $internalnotes,     $serialsadditems,
+            $staffdisplaycount, $opacdisplaycount,
+            $graceperiod,       $location,
+            $enddate,           $closed,
+            $subscriptionid
         );
         ModSubscriptionHistory ($subscriptionid,$histstartdate,$histenddate,$recievedlist,$missinglist,$opacnote,$librariannote);
     print $query->redirect("/cgi-bin/koha/serials/subscription-detail.pl?subscriptionid=$subscriptionid");

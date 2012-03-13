@@ -1280,12 +1280,24 @@ returns the number of rows affected
 =cut
 
 sub ModSubscription {
-    my ($auser,           $branchcode,      $aqbooksellerid,    $cost,             $aqbudgetid,    $startdate,   $periodicity,   $firstacquidate,
-        $dow,             $irregularity,    $numberpattern,     $numberlength,     $weeklength,    $monthlength, $add1,          $every1,
-        $whenmorethan1,   $setto1,          $lastvalue1,        $innerloop1,       $add2,          $every2,      $whenmorethan2, $setto2,
-        $lastvalue2,      $innerloop2,      $add3,              $every3,           $whenmorethan3, $setto3,      $lastvalue3,    $innerloop3,
-        $numberingmethod, $status,          $biblionumber,      $callnumber,       $notes,         $letter,      $hemisphere,    $manualhistory,
-        $internalnotes,   $serialsadditems, $staffdisplaycount, $opacdisplaycount, $graceperiod,   $location,    $enddate,       $subscriptionid
+    my (
+        $auser,             $branchcode,       $aqbooksellerid,
+        $cost,              $aqbudgetid,       $startdate,
+        $periodicity,       $firstacquidate,   $dow,
+        $irregularity,      $numberpattern,    $numberlength,
+        $weeklength,        $monthlength,      $add1,
+        $every1,            $whenmorethan1,    $setto1,
+        $lastvalue1,        $innerloop1,       $add2,
+        $every2,            $whenmorethan2,    $setto2,
+        $lastvalue2,        $innerloop2,       $add3,
+        $every3,            $whenmorethan3,    $setto3,
+        $lastvalue3,        $innerloop3,       $numberingmethod,
+        $status,            $biblionumber,     $callnumber,
+        $notes,             $letter,           $hemisphere,
+        $manualhistory,     $internalnotes,    $serialsadditems,
+        $staffdisplaycount, $opacdisplaycount, $graceperiod,
+        $location,          $enddate,          $closed,
+        $subscriptionid
     ) = @_;
 
     #     warn $irregularity;
@@ -1299,7 +1311,7 @@ sub ModSubscription {
                         numberingmethod=?, status=?, biblionumber=?, callnumber=?, notes=?, 
 						letter=?, hemisphere=?,manualhistory=?,internalnotes=?,serialsadditems=?,
 						staffdisplaycount = ?,opacdisplaycount = ?, graceperiod = ?, location = ?
-						,enddate=?
+						,enddate=?, closed=?
                     WHERE subscriptionid = ?";
 
     #warn "query :".$query;
@@ -1316,7 +1328,8 @@ sub ModSubscription {
         $numberingmethod, $status,         $biblionumber,   $callnumber,
         $notes, $letter, $hemisphere, ( $manualhistory ? $manualhistory : 0 ),
         $internalnotes, $serialsadditems, $staffdisplaycount, $opacdisplaycount,
-        $graceperiod,   $location,        $enddate,           $subscriptionid
+        $graceperiod,   $location,        $enddate,         $closed,
+        $subscriptionid
     );
     my $rows = $sth->rows;
 
@@ -1361,8 +1374,9 @@ sub NewSubscription {
             add3,every3,whenmorethan3,setto3,lastvalue3,innerloop3,
             numberingmethod, status, notes, letter,firstacquidate,irregularity,
             numberpattern, callnumber, hemisphere,manualhistory,internalnotes,serialsadditems,
-            staffdisplaycount,opacdisplaycount,graceperiod,location,enddate)
-        VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+            staffdisplaycount,opacdisplaycount,graceperiod,location,enddate,
+            closed)
+        VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?, 'N')
         |;
     my $sth = $dbh->prepare($query);
     $sth->execute(
