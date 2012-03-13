@@ -174,7 +174,7 @@
     [% END %]
     </div>
     <div id="langfilter">
-    <fieldset><legend>Language</legend>
+    <fieldset>
     <!-- LANGUAGE LIMIT -->
                 <p><label for="language-limit">Language: </label>                                        
                 <select id="language-limit" name="limit">
