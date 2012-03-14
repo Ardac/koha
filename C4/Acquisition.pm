@@ -2044,8 +2044,7 @@ sub GetHistory {
 
     if ( $title ) {
         $query .= " AND biblio.title LIKE ? ";
-        $title =~ s/\s+/%/g;
-        push @query_params, "%$title%";
+        push @query_params, "$title%";
     }
 
     if ( $author ) {
@@ -2063,7 +2062,7 @@ sub GetHistory {
     }
     if ( $name ) {
         $query .= " AND aqbooksellers.name LIKE ? ";
-        push @query_params, "%$name%";
+        push @query_params, "$name%";
     }
 
     if ( $from_placed_on ) {
