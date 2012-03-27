@@ -1179,7 +1179,7 @@ YAHOO.util.Event.onContentReady("furtherm", function () {
             <tr>
                 <td>    [% latestserial.serialseq %]
                 </td>
-                <td>    [% latestserial.planneddate %]
+                <td>    [% latestserial.publisheddate %]
                 </td>
 <!--
                 <td>    [% IF ( latestserial.status1 ) %]Awaited
