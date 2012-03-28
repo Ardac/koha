@@ -433,7 +433,7 @@ $(document).ready(function() {
     <ol>
         [% FOREACH order IN orders %]
         <li><span class="label">[% order.purchaseordernumber -%]:</span>
-        <a href="/cgi-bin/koha/basket.pl?basketno=[% order.basketno -%]"> ([% order.basketno -%]) </a>
+        <a href="/cgi-bin/koha/acqui/basket.pl?basketno=[% order.basketno -%]"> ([% order.basketno -%]) </a>
         </li>
         [% END %]
     </ol>
