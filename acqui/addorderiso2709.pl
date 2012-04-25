@@ -233,6 +233,10 @@ if ($op eq ""){
 
         # remove uncertainprice flag if we have found a price in the MARC record
         $orderinfo{uncertainprice} = 0 if $orderinfo{listprice};
+        if ( $orderinfo->{purchaseordernumber} eq 'XXXXXXXX' ) {
+            $orderinfo->{purchaseordernumber} =
+              $orderinfo->{ord_prefix} . $orderinfo->{purchaseordernumber};
+        }
         my $basketno;
         ( $basketno, $ordernumber ) = NewOrder( \%orderinfo );
 

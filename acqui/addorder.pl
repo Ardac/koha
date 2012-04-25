@@ -205,6 +205,10 @@ if ( $orderinfo->{quantity} ne '0' ) {
         ModOrder( $orderinfo);
     }
     else { # else, it's a new line
+        if ( $orderinfo->{purchaseordernumber} eq 'XXXXXXXX' ) {
+            $orderinfo->{purchaseordernumber} =
+              $orderinfo->{ord_prefix} . $orderinfo->{purchaseordernumber};
+        }
         @$orderinfo{qw(basketno ordernumber )} = NewOrder($orderinfo);
     }
 

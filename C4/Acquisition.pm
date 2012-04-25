@@ -1180,6 +1180,13 @@ sub NewOrder {
         ");
         $sth->execute($ordernumber);
     }
+    my $ordernorm = sprintf '%08d', $ordernumber;
+    if ($orderinfo->{purchaseordernumber}=~s/X{8}$/$ordernorm/) {
+        my $year  = localtime->year() + 1900;
+        $orderinfo->{purchaseordernumber} .= " $year";
+        $dbh->do('UPDATE aqorders set purchaseordernumber = ? where ordernumber = ?',
+            {}, $orderinfo->{purchaseordernumber}, $ordernumber);
+    }
     return ( $orderinfo->{'basketno'}, $ordernumber );
 }
 
@@ -1253,7 +1260,7 @@ sub ModOrder {
     push(@params, $orderinfo->{'ordernumber'} );
     $sth = $dbh->prepare($query);
     $sth->execute(@params);
-    $sth->finish;
+    return;
 }
 
 #------------------------------------------------------------#
