@@ -154,6 +154,7 @@ my $orderinfo					= $input->Vars;
 $orderinfo->{'list_price'}    ||=  0;
 $orderinfo->{'uncertainprice'} ||= 0;
 $orderinfo->{subscriptionid} ||= undef;
+$orderinfo->{budgetdate} = date2iso($orderinfo->{budgetdate});
 
 my $user = $input->remote_user;
 
@@ -270,4 +271,9 @@ if (my $import_batch_id=$$orderinfo{import_batch_id}) {
     print $input->redirect("/cgi-bin/koha/acqui/parcel.pl?invoiceid=" . $orderinfo->{invoiceid});
 } else {
     print $input->redirect("/cgi-bin/koha/acqui/basket.pl?basketno=$basketno");
+}
+
+sub date2iso {
+    my $d = shift;
+    return C4::Dates->new($d)->output('iso');
 }
