@@ -1172,8 +1172,8 @@ YAHOO.util.Event.onContentReady("furtherm", function () {
         <tr>
             <th>Issue #</th>
             <th>Published Date</th>
-            <!-- <th>Status</th> -->
-            <th>Note</th>
+            <!-- <th>Status</th>
+            <th>Note</th> -->
         </tr>
             [% FOREACH latestserial IN subscription.latestserials %]
             <tr>
@@ -1197,9 +1197,9 @@ YAHOO.util.Event.onContentReady("furtherm", function () {
                     [% END %]
                     [% END %]
                 </td>
--->
                 <td>    [% latestserial.notes %]
                 </td>
+-->
             </tr>
             [% END %]
         </table>
