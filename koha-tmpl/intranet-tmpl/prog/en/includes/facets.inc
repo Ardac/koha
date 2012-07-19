@@ -25,6 +25,20 @@
 [% END %]
 </ul></li>
 [% END %]
+[% IF collections %]
+<li>
+Collections
+<ul>
+    <li>
+    <a href="/cgi-bin/koha/catalogue/search.pl?[% query_cgi |html %][% limit_cgi_mono |html %][% IF sort_by %]&amp;sort_by=[% sort_by %][% END %]" title="Restrict to monographs"</a>
+    Monograph Titles
+    </li>
+    <li>
+    <a href="/cgi-bin/koha/catalogue/search.pl?[% query_cgi |html  %][% limit_cgi_serial |html  %][% IF sort_by %]&amp;sort_by=[% sort_by %][% END %]" title="Restrict to serials"</a>
+    Serials Titles
+    </li>
+</ul>
+</li>
 [% END %]
 </ul>
 </div>
