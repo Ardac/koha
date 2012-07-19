@@ -120,7 +120,7 @@ for my $field ($record->fields)
 	}
 	my $value = $tag < 10
 		? $field->data
-		: join ' ', map { $_->[1] } $field->subfields;
+		: join ' ', map { $_->[1] }  grep { $_->[0] ne '9' } $field->subfields;
 	push @marc_data, {
 		label => $label,
 		value => $value,
