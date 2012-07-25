@@ -1,4 +1,12 @@
 <select class="advsearch" name="idx">
+    <option value="acce">Accession Number</option>
+    [% IF (numbersphr) %]
+    <option value="callnum,phr">Call number</option>
+    [% ELSE %]
+    <option value="callnum">Call Number</option>
+    [% END %]
+    <option value="ns">ISSN</option>
+    <option value="nb">ISBN</option>
     <option value="kw">Keyword</option>
     <option value="kw,phr">&nbsp;&nbsp;&nbsp;&nbsp; Keyword as phrase</option>
     <option value="ti">Title</option>
@@ -13,14 +21,6 @@
     <option value="pb">Publisher</option>
     <option value="ln,rtrn">Language</option>
     <option value="su">Subject</option>
-    <option value="nb">ISBN</option>
-    <option value="ns">ISSN</option>
-    [% IF (numbersphr) %]
-    <option value="callnum,phr">Call number</option>
-    [% ELSE %]
-    <option value="callnum">Call Number</option>
-    [% END %]
-    <option value="acce">Accession Number</option>
     <option value="kw,Report-number">Report Number</option>
     <option value="nt">Notes</option>
 </select>
