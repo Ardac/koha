@@ -1,5 +1,5 @@
 <SUBJECT>
-Your cart
+Your Bookbag
 <END_SUBJECT>
 
 [% USE HtmlToText %]
@@ -11,7 +11,7 @@ Your cart
 [% FILTER html2text %]
     <p>Hi,</p>
 
-    <p>[% firstname %] [% surname %] sent you a cart from our online catalog.</p>
+    <p>[% firstname %] [% surname %] sent you a bookbag from our online catalog.</p>
 
     <p>Please note that the attached file is a MARC bibliographic records file
     which can be imported into personal bibliographic software like EndNote,
