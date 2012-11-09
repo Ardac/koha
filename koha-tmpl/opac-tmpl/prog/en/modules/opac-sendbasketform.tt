@@ -6,11 +6,11 @@
 
 	[% IF ( SENT ) %]
         <h3>Message sent</h3>
-        <p>The cart was sent to: [% email_add %]</p>
+        <p>The bookbag was sent to: [% email_add %]</p>
 		<p><a class="focus close" href="#">Close window</a></p>
 	[% END %]
 	[% IF ( error ) %]
-	<p>Problem sending the cart...</p>
+	<p>Problem sending the bookbag...</p>
 	[% END %]
 	
 [% ELSE %]
