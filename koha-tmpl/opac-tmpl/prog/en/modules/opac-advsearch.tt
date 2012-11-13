@@ -79,29 +79,30 @@
 [% IF  expanded_options  %]
             <option value="ti,phr">Title Phrase</option>
             <option value="se,wrdl">Series Title</option>
+            <option value="se,phr">Series Title Phrase</option>
 [% END %]
             <option value="au,wrdl">Author</option>
             
 [% IF expanded_options %]
             <option value="au,phr">Author Phrase</option>
-            <option value="cpn,wrdl">Corporate Name</option>
-            <option value="cpn,phr">Corporate Name Phrase</option>
+            <option value="cpn,wrdl">Corporate Author</option>
+            <option value="cpn,phr">Corporate Author Phrase</option>
             <option value="cfn,wrdl">Conference Name</option>
             <option value="cfn,phr">Conference Name Phrase</option>
 [% END %]
-            <option value="pb,wrdl">Publisher</option>
-            <option value="ln,rtrn">Language</option>
             <option value="su,wrdl">Subject</option>
-[% IF expanded_options %]
+            <option value="su,phr">Subject Phrase</option>
+            <option value="kw,Control-number">Accession Number</option>
             <option value="nb">ISBN</option>
             <option value="ns">ISSN</option>
             <option value="lcn,phr">Call Number</option>
-            <option value="kw,Control-number">Accession Number</option>
+[% IF expanded_options %]
+            <option value="pb,wrdl">Publisher</option>
+            <option value="ln,rtrn">Language</option>
             <option value="kw,Report-number">Report Number</option>
             <option value="nt">Notes/Comments</option>
 [% ELSE %]
-            <option value="nb">ISBN</option>
-            <option value="ns">ISSN</option>
+
 [% END %]
         </select>
         <input type="text" size="30" name="q" title="Enter search terms" value="" />
