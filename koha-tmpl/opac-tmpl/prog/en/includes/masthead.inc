@@ -29,13 +29,15 @@
 [% IF ( OpacPublic ) %]
 <div id="fluid-offset">
 [% UNLESS ( advsearch ) %]<form name="searchform" method="get" action="/cgi-bin/koha/opac-search.pl" id="searchform">
+<!--
     <label for="masthead_search" class="left"> Search 
   [% UNLESS Koha.Preference( 'OpacAddMastheadLibraryPulldown' ) == 1 %]
             [% IF ( mylibraryfirst ) %] (in [% mylibraryfirst %] only)[% END %]
 	[% END %]
     </label>
+-->
 
-	<select name="idx" id="masthead_search" class="left">
+<!--	<select name="idx" id="masthead_search" class="left">
 	[% IF ( ms_kw ) %]
         <option selected="selected" value="">Library catalog</option>
 		[% ELSE %]
@@ -117,8 +119,50 @@
       [% END %]
    [% END %]
 
-
-    <input type="submit" value="Go" id="searchsubmit" class="left" />
+<!-- search options here -->
+        <select name="idx" id="masthead_search" class="left">
+        [% IF ( ms_kw ) %]
+        <option selected="selected" value="">All Fields</option>
+                [% ELSE %]
+        <option value="">All Fields</option>
+                [% END %]
+                [% IF ( ms_ti ) %]
+        <option selected="selected" value="ti">Title</option>
+                [% ELSE %]
+        <option value="ti">Title</option>
+                [% END %]
+                [% IF ( ms_se ) %]
+        <option selected="selected" value="se">Series Title</option>
+                [% ELSE %]
+        <option value="se">Series Title</option>
+                [% END %]
+                [% IF ( ms_au ) %]
+        <option selected="selected" value="au">Author</option>
+                [% ELSE %]
+        <option value="au">Author</option>
+                [% END %]
+                [% IF ( ms_su ) %]
+        <option selected="selected" value="su">Subject</option>
+                [% ELSE %]
+        <option value="su">Subject</option>
+                [% END %]
+                [% IF ( ms_nb ) %]
+                <option selected="selected" value="nb">ISBN</option>
+                [% ELSE %]
+                <option value="nb">ISBN</option>
+                [% END %]
+                [% IF  ms_ns  %]
+                <option selected="selected" value="ns">ISSN</option>
+                [% ELSE %]
+                <option value="ns">ISSN</option>
+                [% END %]
+                [% IF ( ms_callnum ) %]
+        <option selected="selected" value="callnum">Call Number</option>
+                [% ELSE %]
+        <option value="callnum">Call Number</option>
+                [% END %]</select>
+<!-- end of moved search options -->
+    <input type="submit" value="Search" id="searchsubmit" class="left" />
 [% IF ( opacbookbag ) %]<span id="cmspan"></span>[% END %]
 
 [% IF ( virtualshelves ) %]<a href="/cgi-bin/koha/opac-shelves.pl" id="listsmenulink">Lists</a>[% END %]
