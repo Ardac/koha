@@ -95,7 +95,7 @@ sub getConf {
 
 sub getItems {
     my $query = shift;
-    $query .= " limit 11000";
+    $query .= " limit 45";
     my $sth = $dbh->prepare($query);
     $sth->execute;
     my @return;
