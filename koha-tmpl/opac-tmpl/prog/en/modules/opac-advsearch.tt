@@ -246,8 +246,6 @@
     <legend>Media Type: </legend>
     <table>
         <tr>
-           <td><input type="checkbox" value="mc-itype,phr:BK" name="limit" id="itype,phr-0"><label for="itype,phr-0"> Books (print)</label></td>
-           <td><input type="checkbox" value="mc-itype,phr:CR" name="limit" id="itype,phr-5"><label for="itype,phr-5"> Journal (print)</label></td>
            <td><input type="checkbox" value="mc-itype,phr:WEB" name="limit" id="itype,phr-7"><label for="itype,phr-7"> Web Resource</label></td>
            <td><input type="checkbox" value="mc-itype,phr:CDROM" name="limit" id="itype,phr-1"><label for="itype,phr-1"> CD ROM</label></td>
            <td><input type="checkbox" value="mc-itype,phr:DVD" name="limit" id="itype,phr-3"><label for="itype,phr-3"> DVD</label></td>
@@ -388,18 +386,6 @@
         [% END %]    
         [% END %]
         </select>
-        [% IF ( searchdomainloop ) %]
-            <p>OR</p> <!-- should addjs to grey out group pulldown if a library is selected. -->
-                <label for="categoryloop">Groups of libraries</label><select name="multibranchlimit" id="categoryloop">
-                <option value=""> -- none -- </option>
-                [% FOREACH searchdomainloo IN searchdomainloop %]
-                <option value="[% searchdomainloo.categorycode %]">[% searchdomainloo.categoryname %]</option>
-                [% END %]
-                </select>
-        [% END %]        
-        <!--
-        <div style="margin-top:.4em"><label for="available-items"><input type="checkbox" id="available-items" name="limit" value="available" /> Only items currently available for loan or reference</label></div>
-        -->
     </fieldset></div>
     [% END %]
 <!-- /AVAILABILITY LIMITS -->
