@@ -1,5 +1,5 @@
 <option value="relevance">Relevance</option>
-<!--
+
 <optgroup label="Popularity">
 [% IF ( sort_by == "popularity_dsc" ) %]
 <option value="popularity_dsc" selected="selected">Popularity (most to least)</option>[% ELSE %]
@@ -10,7 +10,7 @@
 <option value="popularity_asc">Popularity (least to most)</option>
 [% END %]
 </optgroup>
--->
+
 <optgroup label="Author">
 [% IF ( sort_by == "author_az" || sort_by == "author_asc" ) %]
 <option value="author_az" selected="selected">Author (A-Z)</option>
@@ -25,26 +25,26 @@
 </optgroup>
 <optgroup label="Call Number">
 [% IF ( sort_by == "call_number_asc" ) %]
-<option value="call_number_asc" selected="selected">Call number (0-9 to A-Z)</option>
+<option value="call_number_asc" selected="selected">Call Number (0-9)</option>
 [% ELSE %]
-<option value="call_number_asc">Call number (0-9 to A-Z)</option>
+<option value="call_number_asc">Call Number (0-9)</option>
 [% END %]
 [% IF ( sort_by == "call_number_dsc" ) %]
-<option value="call_number_dsc" selected="selected">Call number (Z-A to 9-0)</option>
+<option value="call_number_dsc" selected="selected">Call Number (9-0)</option>
 [% ELSE %]
-<option value="call_number_dsc">Call number (Z-A to 9-0)</option>
+<option value="call_number_dsc">Call Number (9-0)</option>
 [% END %]
 </optgroup>
 <optgroup label="Dates">
 [% IF ( sort_by == "pubdate_dsc" ) %]
-<option value="pubdate_dsc" selected="selected">Publication/Copyright date: Newest to oldest</option>
+<option value="pubdate_dsc" selected="selected">Newest to Oldest</option>
 [% ELSE %]
-<option value="pubdate_dsc">Publication/Copyright date: Newest to oldest</option>
+<option value="pubdate_dsc">Newest to Oldest</option>
 [% END %]
 [% IF ( sort_by == "pubdate_asc" ) %]
-<option value="pubdate_asc" selected="selected">Publication/Copyright date: Oldest to newest</option>
+<option value="pubdate_asc" selected="selected">Oldest to Newest</option>
 [% ELSE %]
-<option value="pubdate_asc">Publication/Copyright date: Oldest to newest</option>
+<option value="pubdate_asc">Oldest to Newest</option>
 [% END %]
 <!--
 [% IF ( sort_by == "acqdate_dsc" ) %]
