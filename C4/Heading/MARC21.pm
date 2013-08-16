@@ -49,69 +49,36 @@ FIXME - this should be moved to a configuration file.
 =cut
 
 my $bib_heading_fields = {
+    '084' => { auth_type => 'GENRE/FORM', subfields => 'a', subject => 1 },
     '100' => {
         auth_type  => 'PERSO_NAME',
-        subfields  => 'abcdfghjklmnopqrst',
+        subfields  => 'a',
         main_entry => 1
     },
     '110' => {
         auth_type  => 'CORPO_NAME',
-        subfields  => 'abcdfghklmnoprst',
+        subfields  => 'a',
         main_entry => 1
     },
     '111' => {
         auth_type  => 'MEETI_NAME',
-        subfields  => 'acdfghjklnpqst',
+        subfields  => 'a',
         main_entry => 1
     },
-    '130' => {
-        auth_type  => 'UNIF_TITLE',
-        subfields  => 'adfghklmnoprst',
-        main_entry => 1
-    },
-    '440' => { auth_type => 'UNIF_TITLE', subfields => 'anp', series => 1 },
-    '600' => {
-        auth_type => 'PERSO_NAME',
-        subfields => 'abcdfghjklmnopqrstvxyz',
-        subject   => 1
-    },
-    '610' => {
-        auth_type => 'CORPO_NAME',
-        subfields => 'abcdfghklmnoprstvxyz',
-        subject   => 1
-    },
-    '611' => {
-        auth_type => 'MEETI_NAME',
-        subfields => 'acdfghjklnpqstvxyz',
-        subject   => 1
-    },
-    '630' => {
-        auth_type => 'UNIF_TITLE',
-        subfields => 'adfghklmnoprstvxyz',
-        subject   => 1
-    },
-    '648' => { auth_type => 'CHRON_TERM', subfields => 'avxyz',  subject => 1 },
-    '650' => { auth_type => 'TOPIC_TERM', subfields => 'abvxyz', subject => 1 },
-    '651' => { auth_type => 'GEOGR_NAME', subfields => 'avxyz',  subject => 1 },
-    '655' => { auth_type => 'GENRE/FORM', subfields => 'avxyz',  subject => 1 },
-    '700' => { auth_type => 'PERSO_NAME', subfields => 'abcdfghjklmnopqrst' },
-    '710' => { auth_type => 'CORPO_NAME', subfields => 'abcdfghklmnoprst' },
-    '711' => { auth_type => 'MEETI_NAME', subfields => 'acdfghjklnpqst' },
-    '730' => { auth_type => 'UNIF_TITLE', subfields => 'adfghklmnoprst' },
-    '800' => {
-        auth_type => 'PERSO_NAME',
-        subfields => 'abcdfghjklmnopqrst',
-        series    => 1
-    },
-    '810' => {
-        auth_type => 'CORPO_NAME',
-        subfields => 'abcdfghklmnoprst',
-        series    => 1
-    },
-    '811' =>
-      { auth_type => 'MEETI_NAME', subfields => 'acdfghjklnpqst', series => 1 },
+    '648' => { auth_type => 'CHRON_TERM', subfields => 'a',  subject => 1 },
+    '650' => { auth_type => 'TOPIC_TERM', subfields => 'a', subject => 1 },
+    '651' => { auth_type => 'GEOGR_NAME', subfields => 'a',  subject => 1 },
+    '655' => { auth_type => 'GENRE/FORM', subfields => 'a',  subject => 1 },
+    '656' => { auth_type => 'TOPIC_TERM', subfields => 'a', subject => 1 },
+    '657' => { auth_type => 'TOPIC_TERM', subfields => 'a', subject => 1 },
+    '658' => { auth_type => 'TOPIC_TERM', subfields => 'a', subject => 1 },
+    '662' => { auth_type => 'GEOGR_NAME', subfields => 'a', subject => 1 },
+    '700' => { auth_type => 'PERSO_NAME', subfields => 'a' },
+    '710' => { auth_type => 'CORPO_NAME', subfields => 'a' },
+    '711' => { auth_type => 'MEETI_NAME', subfields => 'a' },
     '830' =>
-      { auth_type => 'UNIF_TITLE', subfields => 'adfghklmnoprst', series => 1 },
+      { auth_type => 'UNIF_TITLE', subfields => 'a', series => 1 },
+    '830' => { auth_type => 'UNIF_TITLE', subfields => 't', series => 1 },
 };
 
 =head2 subdivisions
