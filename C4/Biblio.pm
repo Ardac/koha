@@ -2944,6 +2944,13 @@ sub _koha_add_biblio {
     	$biblio->{'serial'} = 0;
     	if ( $biblio->{'seriestitle'} ) { $biblio->{'serial'} = 1 }
     }
+    my $acce = get_fao_acce($biblio);
+    if ( $acce && !check_unique_acce(0, $acce) ) {
+        $error = "Attempt to add duplicate accesssion number:$acce";
+        warn $error;
+        $acce = undef;
+    }
+
 
     my $query = "INSERT INTO biblio
         SET frameworkcode = ?,
@@ -2955,12 +2962,16 @@ sub _koha_add_biblio {
             seriestitle = ?,
             copyrightdate = ?,
             datecreated=NOW(),
-            abstract = ?
+            abstract = ?,
+            accessionno = ?
         ";
     my $sth = $dbh->prepare($query);
     $sth->execute(
-        $frameworkcode, $biblio->{'author'},      $biblio->{'title'},         $biblio->{'unititle'}, $biblio->{'notes'},
-        $biblio->{'serial'},        $biblio->{'seriestitle'}, $biblio->{'copyrightdate'}, $biblio->{'abstract'}
+        $frameworkcode,           $biblio->{'author'},
+        $biblio->{'title'},       $biblio->{'unititle'},
+        $biblio->{'notes'},       $biblio->{'serial'},
+        $biblio->{'seriestitle'}, $biblio->{'copyrightdate'},
+        $biblio->{'abstract'},    $acce
     );
 
     my $biblionumber = $dbh->{'mysql_insertid'};
@@ -2987,6 +2998,12 @@ sub _koha_modify_biblio {
     my ( $dbh, $biblio, $frameworkcode ) = @_;
     my $error;
 
+    my $acce = get_fao_acce($biblio);
+    if ( $acce && !check_unique_acce($biblio->{biblionumber}, $acce) ) {
+        $error = "Attempt to add duplicate accesssion number:$acce";
+        warn $error;
+        $acce = undef;
+    }
     my $query = "
         UPDATE biblio
         SET    frameworkcode = ?,
@@ -2997,16 +3014,23 @@ sub _koha_modify_biblio {
                serial = ?,
                seriestitle = ?,
                copyrightdate = ?,
-               abstract = ?
+               abstract = ?,
+               accessionno = ?
         WHERE  biblionumber = ?
         "
       ;
     my $sth = $dbh->prepare($query);
 
-    $sth->execute(
-        $frameworkcode,      $biblio->{'author'},      $biblio->{'title'},         $biblio->{'unititle'}, $biblio->{'notes'},
-        $biblio->{'serial'}, $biblio->{'seriestitle'}, $biblio->{'copyrightdate'}, $biblio->{'abstract'}, $biblio->{'biblionumber'}
-    ) if $biblio->{'biblionumber'};
+    if ( $biblio->{biblionumber} ) {
+        $sth->execute(
+            $frameworkcode,         $biblio->{author},
+            $biblio->{title},       $biblio->{unititle},
+            $biblio->{notes},       $biblio->{serial},
+            $biblio->{seriestitle}, $biblio->{copyrightdate},
+            $biblio->{abstract},    $acce,
+            $biblio->{biblionumber}
+        );
+    }
 
     if ( $dbh->errstr || !$biblio->{'biblionumber'} ) {
         $error .= "ERROR in _koha_modify_biblio $query" . $dbh->errstr;
@@ -3659,8 +3683,42 @@ sub RemoveAllNsb {
     return $record;
 }
 
-1;
+=head2 get_fao_acce
 
+Return the UNFAO accession  number from a biblio rec
+
+Should be in tag 001 and 6 digits in length
+
+Invalid acces should be null
+
+=cut
+
+sub get_fao_acce {
+    my $bib = shift;
+    if ($bib->{accessionno} ) {
+        my $acce = $bib->{accessionno};
+        if ( $acce =~ m/^\d{6}$/ ) {
+            return $acce;
+        }
+    }
+    return;
+}
+
+sub check_unique_acce {
+    my ( $biblionumber, $acce_no ) = @_;
+    my $dbh = C4::Context->dbh;
+    my $ret_bnr;
+    ($ret_bnr) = $dbh->selectrow_array(
+        q{select biblionumber from biblio where accessionno = ?},
+        {}, $acce_no );
+    if ( $ret_bnr && $biblionumber != $ret_bnr ) {
+        return 0;
+    }
+
+    return 1;
+}
+
+1;
 
 __END__
 
