@@ -683,16 +683,10 @@ sub SearchSubscriptions {
         push @where_args, $args->{biblionumber};
     }
     if( $args->{title} ){
-        my @words = split / /, $args->{title};
-        my (@strs, @args);
-        foreach my $word (@words) {
+            my $search_term = $args->{title};
+            $search_term=~s/\s*$/%/;
             push @strs, "biblio.title LIKE ?";
-            push @args, "%$word%";
-        }
-        if (@strs) {
-            push @where_strs, '(' . join (' AND ', @strs) . ')';
-            push @where_args, @args;
-        }
+            push @args, $search_term;
     }
     if( $args->{issn} ){
         push @where_strs, "biblioitems.issn LIKE ?";
