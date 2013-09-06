@@ -1171,7 +1171,7 @@ YAHOO.util.Event.onContentReady("furtherm", function () {
     <table>
         <tr>
             <th>Issue #</th>
-            <th>Date</th>
+            <th>Published Date</th>
             <th>Status</th>
             <th>Note</th>
         </tr>
