@@ -683,10 +683,10 @@ sub SearchSubscriptions {
         push @where_args, $args->{biblionumber};
     }
     if( $args->{title} ){
-            my $search_term = $args->{title};
-            $search_term=~s/\s*$/%/;
-            push @strs, "biblio.title LIKE ?";
-            push @args, $search_term;
+        my $search_term = $args->{title};
+        $search_term=~s/\s*$/%/;
+        push @where_strs, "biblio.title LIKE ?";
+        push @where_args, $search_term;
     }
     if( $args->{issn} ){
         push @where_strs, "biblioitems.issn LIKE ?";
