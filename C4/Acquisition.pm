@@ -75,6 +75,7 @@ BEGIN {
         &GetItemnumbersFromOrder
 
         &AddClaim
+        GetOrdersByPO
     );
 }
 
@@ -2575,6 +2576,41 @@ sub ReopenInvoice {
     my $sth = $dbh->prepare($query);
     $sth->execute($invoiceid);
 }
+
+=head3 GetOrdersByPO
+
+=over 4
+
+$orders_arrayref = GetOrdersByPO($purchaseordernumber);
+
+Retrieves orders by (possibly truncated) purchase order number
+
+return :
+An arrayref of matching orders (incl basket level info)
+
+=back
+
+=cut
+
+sub GetOrdersByPO {
+    my $ponumber = shift;
+    $ponumber .= '%';
+    my $sql =
+'SELECT aqorders.*, biblio.*, biblioitems.*, aqbasket.booksellerid, aqbasket.creationdate, '
+      . 'aqbooksellers.name from aqorders '
+      . 'LEFT JOIN aqbasket on aqorders.basketno = aqbasket.basketno '
+      . 'LEFT JOIN aqbooksellers on aqbasket.booksellerid = aqbooksellers.id '
+      . 'LEFT JOIN biblio           ON biblio.biblionumber=aqorders.biblionumber '
+      . 'LEFT JOIN biblioitems      ON biblioitems.biblionumber=biblio.biblionumber '
+      . 'WHERE purchaseordernumber like ? '
+      . q|AND (datecancellationprinted IS NULL OR datecancellationprinted='0000-00-00') |
+      . 'order by purchaseordernumber';
+    my $dbh = C4::Context->dbh;
+    my $rows = $dbh->selectall_arrayref( $sql, { Slice => {} }, $ponumber );
+
+    return $rows;
+}
+
 
 1;
 __END__
