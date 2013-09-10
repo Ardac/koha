@@ -2027,6 +2027,7 @@ sub GetHistory {
             aqorders.invoiceid,
             aqinvoices.invoicenumber,
             aqbooksellers.id as id,
+            aqorders.purchaseordernumber,
             aqorders.biblionumber
         FROM aqorders
         LEFT JOIN aqbasket ON aqorders.basketno=aqbasket.basketno
@@ -2103,13 +2104,16 @@ sub GetHistory {
             push @query_params, $userenv->{branch};
         }
     }
-    $query .= " ORDER BY id";
+    $query .= " ORDER BY purchaseordernumber";
     my $sth = $dbh->prepare($query);
     $sth->execute( @query_params );
     my $cnt = 1;
     while ( my $line = $sth->fetchrow_hashref ) {
         $line->{count} = $cnt++;
-        $line->{toggle} = 1 if $cnt % 2;
+#        $line->{toggle} = 1 if $cnt % 2;
+        $line->{quantity}||= 0;
+        $line->{ecost}   ||= 0;
+        $line->{quantityreceived} ||= 0;
         push @order_loop, $line;
         $total_qty         += $line->{'quantity'};
         $total_qtyreceived += $line->{'quantityreceived'};
