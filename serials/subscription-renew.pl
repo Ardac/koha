@@ -100,7 +100,6 @@ $template->param(
     bibliotitle    => $subscription->{bibliotitle},
     $op            => 1,
     popup          => ($mode eq 'popup'),
-    DHTMLcalendar_dateformat => C4::Dates->DHTMLcalendar(),
 );
 
 # Print the page

@@ -25,16 +25,7 @@
 		<input type="hidden" name="subscriptionid" value="[% subscriptionid %]" />
 		<fieldset class="rows"><legend>Subscription renewal for [% bibliotitle %]</legend>
 		<ol><li><label for="startdate">Start date: </label>
-        <img src="[% themelang %]/lib/calendar/cal.gif" id="startdate_button" style="cursor: pointer;" alt="Show Calendar" title="Show Calendar" />
-        <input type="text" id="startdate" name="startdate" value="[% startdate %]" isize="13" maxlength="10" style="border-width: 0px;"/></li>
-        <script type="text/javascript">
-            Calendar.setup({
-                 inputField   : "startdate",
-                 ifFormat     : "[% DHTMLcalendat_dateformat %]",
-                 button       : "startdate_button",
-                 align        : "T1"
-            });
-        </script>
+        <input type="text" id="startdate" name="startdate" value="[% startdate %]" size="10" maxlength="10" class="focusa datepicker" /></li>
 		<li><fieldset>
 		<legend>Subscription length:</legend>
 		<ol><li><label for="numberlength">Number of num:</label><input type="text" id="numberlength" name="numberlength" value="[% numberlength %]" /></li>
