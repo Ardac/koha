@@ -30,6 +30,7 @@ use C4::Acquisition;
 use C4::Budgets;
 use C4::Bookseller qw( GetBookSellerFromId);
 use C4::Debug;
+use C4::Orders qw( get_letters );
 use C4::Biblio;
 use C4::Members qw/GetMember/;  #needed for permissions checking for changing basketgroup of a basket
 use C4::Items;
@@ -87,6 +88,16 @@ my $basket = GetBasket($basketno);
 # warn "=>".$basket->{booksellerid};
 $booksellerid = $basket->{booksellerid} unless $booksellerid;
 my ($bookseller) = GetBookSellerFromId($booksellerid);
+
+my $letters = get_letters('acquisitions');
+my $letter =
+  ( ( @{$letters} > 1 ) || ( $letters->[0]->{name} || $letters->[0]->{code} ) );
+$template->param( letters => $letters );
+
+if ( !$bookseller ) {
+    $template->param( NO_BOOKSELLER => 1 );
+}
+
 my $op = $query->param('op');
 if (!defined $op) {
     $op = q{};
