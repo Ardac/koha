@@ -1,0 +1,41 @@
+[% INCLUDE "doc-head-open.inc" %]
+<title>Koha &rsaquo; Aquisitions</title>
+[% INCLUDE "doc-head-close.inc" %]
+</head>
+<body>
+
+<div id="doc" class="yui-t7">
+   <div id="bd">
+
+
+<h1>Catalog search</h1>
+[% IF no_query %]
+    <div class="warning">You must enter a term to search on </div>
+[% END %]
+<form name="f" action="/cgi-bin/koha/acqui/order-bib-search.pl" method="get">
+    <input type="hidden" name="op" value="do_search" />
+    <input type="hidden" name="type" value="intranet" />
+    <label for="q">Keyword</label>
+    <input type="text" id="q"  name="q" />
+
+    <!-- ITEMTYPE LIMITS -->
+        <p>Limit type to:
+        <select name="itemtypelimit">
+        <option value="">All</option>
+        [% FOR itype IN itemtypeloop %]
+            <option value="[% itype.code %]">
+                [% itype.description | xml %]
+            </option>
+        [% END %]
+        </select>
+        </p>
+    <!-- /ITEMTYPE LIMITS -->
+
+    <input type="submit" value="Search" />
+
+
+</form>
+
+</div>
+
+[% INCLUDE "intranet-bottom.inc" %]
