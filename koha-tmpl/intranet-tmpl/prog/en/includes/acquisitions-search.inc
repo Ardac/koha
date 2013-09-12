@@ -1,6 +1,13 @@
 <div class="gradient">
 <h1 id="logo"><a href="/cgi-bin/koha/mainpage.pl">[% LibraryName %]</a></h1><!-- Begin Acquisitions Resident Search Box -->
 <div id="header_search">
+<div id="porders_search" class="residentsearch">
+    <p class="tip">Search PO Number:</p>
+    <form action="/cgi-bin/koha/acqui/posearch.pl" method="post">
+        <input type="text" size="30" name="ponumber" id="ponumber" class="focus" />
+        <input type="submit" class="submit" value="Submit" />
+    </form>
+</div>
 <div id="supplier_search" class="residentsearch">
 	<p class="tip">Search vendors:</p>
         <form name="findsupplier" action="/cgi-bin/koha/acqui/booksellers.pl" method="post">
@@ -24,6 +31,7 @@
 	</form>
 	</div>	
 			<ul id="tabtriggers">
+            <li><a href="#porders_search">PO Number search</a></li>
             <li><a href="#supplier_search">Vendor search</a></li>
             <li><a href="#orders_search">Orders search</a></li>
 			</ul>	

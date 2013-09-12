@@ -536,6 +536,24 @@ $(document).ready(function()
                 [% END %]
             </li>
             <li>
+              [% IF purchaseordernumber %]
+                <label for="purchaseordernumber">Purchase order: </label>
+                <input type="text" id="purchaseordernumber" size="20" name="purchaseordernumber"  value="[% purchaseordernumber %]" />
+              [% ELSE %]
+            Select ordernumber prefix - Leave ordernumber as XXXXXXXX for auto-generated</li>
+           <li><label for="ord_prefix">Prefix: </label>
+              <select  name="ord_prefix" id="ord_prefix">
+              [% FOR prefix IN prefix_list %]
+                <option value="[% prefix.code %]">[% prefix.text %]</option>
+              [% END %]
+                </select>
+           </li>
+           <li>
+                <label for="purchaseordernumber">Purchase order: </label>
+                <input type="text" id="purchaseordernumber" size="20" name="purchaseordernumber"  value="XXXXXXXX" />
+              [% END %]
+            </li>
+            <li>
                 <label for="notes">Notes: </label>
                 <textarea id="notes" cols="30" rows="3" name="notes" >[% IF ( notes ) %][% notes %][% END %]</textarea>
             </li>

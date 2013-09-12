@@ -105,6 +105,7 @@ my $close           = $input->param('close');
 my $uncertainprice  = $input->param('uncertainprice');
 my $import_batch_id = $input->param('import_batch_id'); # if this is filled, we come from a staged file, and we will return here after saving the order !
 my $subscriptionid  = $input->param('subscriptionid');
+my $purchaseorder   = $input->param('purchaseordernumber');
 my $data;
 my $new = 'no';
 
@@ -182,6 +183,9 @@ if ( $ordernumber eq '' ) {    # create order
 # otherwise, retrieve suggestion information.
     if ($suggestionid) {
         $data = ($biblionumber) ? GetBiblioData($biblionumber) : GetSuggestion($suggestionid);
+    }
+    if (!$data->{purchaseordernumber}) {
+        $data->{ord_prefix} = q{};
     }
 }
 else {    #modify order
@@ -322,6 +326,8 @@ if (C4::Context->preference('AcqCreateItem') eq 'ordering' && !$ordernumber) {
 my @itemtypes;
 @itemtypes = C4::ItemType->all unless C4::Context->preference('item-level_itypes');
 
+my $prefix_list = get_prefix_list();
+
 if ( defined $subscriptionid ) {
     my $lastOrderReceived = GetLastOrderReceivedFromSubscriptionid $subscriptionid;
     if ( defined $lastOrderReceived ) {
@@ -415,13 +421,35 @@ $template->param(
     import_batch_id  => $import_batch_id,
     subscriptionid   => $subscriptionid,
     acqcreate        => C4::Context->preference("AcqCreateItem") eq "ordering" ? 1 : "",
-    (uc(C4::Context->preference("marcflavour"))) => 1
+    (uc(C4::Context->preference("marcflavour"))) => 1,
+    prefix_list      => $prefix_list,
+    ord_prefix       => $data->{ord_prefix},
+    budgetdate       => C4::Dates->new($data->{budgetdate},'iso')->output,
+    purchaseordernumber => $data->{purchaseordernumber},
+    booksellerinvoicenumber => $data->{booksellerinvoicenumber},
 );
 
 $template->param ( notes => $data->{'notes'} ) if ( $ordernumber );
 
 output_html_with_http_headers $input, $cookie, $template->output;
 
+sub get_prefix_list {
+    my $fao_order_prefixes = {
+        LB => 'LB Books for library collection',
+        OB => 'OB Books for divisions',
+        D => 'D Direct order for serials',
+        G => 'G Gifts',
+        E => 'E Exchange',
+        P => 'P Paid Order',
+        N => 'N Child Order',
+    };
+    my $list = [];
+    for my $val ( sort keys %{$fao_order_prefixes} ) {
+        push @{$list}, { code => $val, text => $fao_order_prefixes->{$val}, };
+    }
+    push @{$list}, { code => q{}, text => 'No Prefix', };
+    return $list;
+}
 
 =head2 MARCfindbreeding
 
@@ -435,7 +463,7 @@ Returns as second parameter the character encoding.
 =cut
 
 sub MARCfindbreeding {
-    my ( $id ) = @_;
+    my ( $id ) = @_k
     my ($marc, $encoding) = GetImportRecordMarc($id);
     # remove the - in isbn, koha store isbn without any -
     if ($marc) {

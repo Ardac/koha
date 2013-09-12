@@ -1,0 +1,100 @@
+[% INCLUDE "doc-head-open.inc" %]
+<title>Koha &rsaquo; Search by Purchase Order Number [% ponumber %]</title>
+[% INCLUDE "doc-head-close.inc" %]
+<script type="text/javascript" src="[% themelang %]/lib/jquery/plugins/jquery.tablesorter.min.js"></script>
+<script type="text/JavaScript">
+//<![CDATA[
+    $(document).ready(function() {
+        $("#orders").tablesorter()
+        //$("#orders").tablesorter({
+        //    sortForce: [[0,0]]
+        //});
+    });
+//]]>
+</script>
+</head>
+<body>
+[% INCLUDE "header.inc" %]
+[% INCLUDE "acquisitions-search.inc" %]
+
+<div id="breadcrumbs">
+    <a href="/cgi-bin/koha/mainpage.pl">Home</a> &rsaquo;
+    <a href="/cgi-bin/koha/acqui/acqui-home.pl">Acquisitions</a> &rsaquo;
+    Search for Purchase Order <em>[% ponumber %]</em>
+</div>
+
+<div id="doc3" class="yui-t2">
+
+    <div id="bd">
+        <div id="yui-main">`
+            <div class="yui-b">
+            [% INCLUDE "acquisitions-toolbar.inc" %]
+            <h1>You searched on <b>purchase order number [% searchstring %],</b>
+                [% orders_returned %] results found</h1>
+                <div id="order_list">
+                    <table id="orders">
+                    <thead>
+                    <tr>
+                        <th>Purchase Order No</th>
+                        <th>Basket</th>
+                        <th>Invoice Number</th>
+                        <th>Summary</th>
+                        <th>ISBN/ISSN</th>
+                        <th>Vendor</th>
+                        <th>Placed on</th>
+                        <th>Received On</th>
+                        <th>Qty ordered</th>
+                        <th>Unit cost</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    [% FOR ord IN orders_loop %]
+                            [% IF loop.even %]
+                                <tr class="highlight">
+                            [% ELSE %]
+                                <tr>
+                            [% END %]
+                                <td>
+                                    [% ord.purchaseordernumber %]
+                                </td>
+                                <td>
+                        <a href="basket.pl?basketno=[% ord.basketno %]">[% ord.basketno %]</a>
+                                </td>
+                                <td>
+                                [% IF ord.booksellerinvoicenumber %]
+                            <a href="/cgi-bin/koha/acqui/parcel.pl?invoice=[% ord.booksellerinvoicenumber %]&amp;supplierid=[% ord.booksellerid %]&amp;datereceived=[% ord.datereceived %]">[% ord.booksellerinvoicenumber %]</a>
+                                [% ELSE %]
+                                    &nbsp;
+                                [% END %]
+                                </td>
+                                <td>
+<a href="/cgi-bin/koha/catalogue/detail.pl?biblionumber=[% ord.biblionumber %]">
+[% ord.title | xml %]</a>
+                                    <br />[% ord.author | xml %]
+                                </td>
+                                <td>
+                                [% ord.isbn %]
+                                &nbsp;
+                                [% ord.issn %]
+                                </td>
+                                <td>
+                <a href="/cgi-bin/koha/acqui/supplier.pl?supplierid=[% ord.booksellerid %]">[% ord.name %]</a>
+                                </td>
+                                <td>
+                                    [% ord.creationdate %]
+                                </td>
+                                <td>[% ord.datereceived %]</td>
+                                <td>[% ord.quantity %]</td>
+                                <td>[% ord.ecost %]</td>
+                                </tr>
+                    [% END %]
+                    </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="yui-b">
+[% INCLUDE "acquisitions-menu.inc" %]
+        </div>
+    </div>
+[% INCLUDE "intranet-bottom.inc" %]
