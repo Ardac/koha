@@ -122,6 +122,27 @@
 //]]>
 </script>
 
+<script type="text/javascript">
+//<![CDATA[
+function confirm_print() {
+    window.location = "/cgi-bin/koha/acqui/printorder.pl?basketno=[% basketno %]&supplierid=[% booksellerid %]";
+}
+
+function printOrder(theForm) {
+    var windowName = "Print Order";
+    var supp = $('#booksellerid').val();
+    var code = $('#letter_code').val();
+    var bskt = $('#basketno').val();
+    var url = '/cgi-bin/koha/acqui/printorder.pl?supplierid=' + supp + '&letter_code=' + code + '&basketno=' + bskt;
+
+    var newwindow = window.open(url, windowName);
+    if (window.focus() ) {
+        newwindow.focus();
+    }
+}
+//]]>
+</script>
+
 <style type="text/css">
 .sortmsg {font-size: 80%;}
 </style>
@@ -474,6 +495,21 @@
 [% END %]
 [% END %]    [% ELSE %] <!-- if we want just to select a basketgroup for a closed basket -->
     [% END %]
+
+    <fieldset id="acqui_order_print">
+        <legend>Print Order</legend>
+        <form action="/cgi-bin/koha/acqui/printorder.pl" method="post">
+            <select name="letter_code" id="letter_code">
+            [% FOR letter IN letters %]
+            <option value="[% letter.code %]">[% letter.name %]</option>
+            [% END %]
+            </select>
+            <input type="hidden" name="booksellerid" id="booksellerid" value="[% booksellerid %]" />
+            <input type="hidden" name="basketno" id="basketno" value="[% basketno %]" />
+            <input type="button" name="submit_print" class="button" value="Print Order" onclick="printOrder(document.pform)" />
+         </form>
+    </fieldset>
+
 [% IF ( confirm_close ) %]
         <div id="closebasket_needsconfirmation" class="dialog alert">
 
