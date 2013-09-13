@@ -642,7 +642,7 @@ function verify_images() {
             [% FOREACH latestserial IN subscription.latestserials %]
                 <tr>
                     <td>[% latestserial.serialseq %]</td>
-                    <td>[% latestserial.planneddate %]</td>
+                    <td>[% latestserial.receiveddate %]</td>
                     <td>[% latestserial.publisheddate%]</td>
                     <td>
                       [% IF ( latestserial.status1 ) %]Expected[% END %]
