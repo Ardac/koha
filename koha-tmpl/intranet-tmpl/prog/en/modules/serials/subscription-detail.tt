@@ -350,6 +350,9 @@ $(document).ready(function() {
                     [% serialslis.publisheddate %]
                 </td>
                 <td>
+                    [% serialslis.receiveddate %]
+                </td>
+                <td>
                     [% IF ( serialslis.status1 ) %]Expected[% END %]
                     [% IF ( serialslis.status2 ) %]Arrived[% END %]
                     [% IF ( serialslis.status3 ) %]Late[% END %]
