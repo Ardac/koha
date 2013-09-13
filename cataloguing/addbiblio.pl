@@ -980,6 +980,11 @@ elsif ( $op eq "delete" ) {
             my $urecord = MARC::Record::new_from_xml( $uxml, 'UTF-8' );
             $record = $urecord;
         };
+        # Remove cataloguers initials on duplicate i.e. copy a record
+        if ( $op eq 'duplicate' ) {
+            $record->delete_field( $record->field('001') );
+            $record->delete_field( $record->field('859') );
+        }
     }
     build_tabs( $template, $record, $dbh, $encoding,$input );
     $template->param(
