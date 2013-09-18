@@ -255,7 +255,6 @@
     </table>
     </fieldset>
     </div>
-    [% END %]
     </div>
     <div id="langfilter">
     <fieldset>
