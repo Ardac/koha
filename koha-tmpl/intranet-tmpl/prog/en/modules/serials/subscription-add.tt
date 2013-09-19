@@ -1000,18 +1000,11 @@ $(document).ready(function() {
 	    [% IF ( subscriptionid ) %]
         <li><span class="label">Subscription #</span> [% subscriptionid %]</li>
         [% END %]
-        [% IF closed == 'Y' %]
+        [% IF closed  %]
         <li>
         <label for="closed_text" class="required">Status:</label>
         <span name="closed_text" class="required">
            <em>This subscription is closed</em>
-        </span>
-        </li>
-        [% ELSIF closed == 'E' %]
-        <li>
-        <label for="closed_text" class="required">Status:</label>
-        <span name="closed_text" class="required">
-           <em>This subscription is expired</em>
         </span>
         </li>
         [% END %]
