@@ -463,7 +463,7 @@ Returns as second parameter the character encoding.
 =cut
 
 sub MARCfindbreeding {
-    my ( $id ) = @_k
+    my ( $id ) = @_;
     my ($marc, $encoding) = GetImportRecordMarc($id);
     # remove the - in isbn, koha store isbn without any -
     if ($marc) {
