@@ -333,9 +333,9 @@ sub redirect_mod_subscription {
     my $nextexpected = GetNextExpected($subscriptionid);
     my $closed = $query->param('closed');
     if ($closed && $closed eq 'close') {
-        $closed = 'Y';
+        $closed = 1;
     } else {
-        $closed = 'N';
+        $closed = 0;
     }
 	#  If it's  a mod, we need to check the current 'expected' issue, and mod it in the serials table if necessary.
     if ( $nextacquidate ne $nextexpected->{planneddate}->output('iso') ) {
