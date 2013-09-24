@@ -134,7 +134,7 @@
         </li>
 		[% IF ( gst ) %]
         <li>
-            <label for="gst">GST:</label>
+            <label for="gst">Tax:</label>
             <input type="text" size="20" id="gst" name="gst" />
         </li>
 		[% END %]

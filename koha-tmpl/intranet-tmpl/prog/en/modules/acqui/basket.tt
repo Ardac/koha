@@ -297,8 +297,8 @@ function printOrder(theForm) {
                         <th>Qty.</th>
                         <th class="gste">Total tax exc. ([% currency %])</th>
                         <th class="gsti">Total tax inc. ([% currency %])</th>
-                        <th>GST %</th>
-                        <th>GST</th>
+                        <th>Tax %</th>
+                        <th>Tax</th>
                         <th>Fund</th>
                         [% IF ( active ) %]
                             [% UNLESS ( closedate ) %]
@@ -311,7 +311,7 @@ function printOrder(theForm) {
                 <tfoot>
                 [% FOREACH foot_loo IN book_foot_loop %]
                     <tr>
-                        <th>Total (GST [% foot_loo.gstgsti %])</th>
+                        <th>Total (Tax [% foot_loo.gstgsti %])</th>
                         <th class="gste">&nbsp;</th>
                         <th class="gste">&nbsp;</th>
                         <th class="gste">&nbsp;</th>
@@ -442,8 +442,8 @@ function printOrder(theForm) {
                   <th>Qty.</th>
                   <th class="gste">Total tax exc. ([% currency %])</th>
                   <th class="gsti">Total tax inc. ([% currency %])</th>
-                  <th>GST %</th>
-                  <th>GST</th>
+                  <th>Tax %</th>
+                  <th>Tax</th>
                   <th>Fund</th>
                 </tr>
               </thead>
