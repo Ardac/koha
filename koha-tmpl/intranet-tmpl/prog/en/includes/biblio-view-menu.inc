@@ -6,6 +6,14 @@
 [% IF ( can_view_MARC ) %]
 [% IF ( marcview ) %]<li class="active">[% ELSE %]<li>[% END %]
 <a href="/cgi-bin/koha/catalogue/MARCdetail.pl?biblionumber=[% IF ( object ) %][% object %][% ELSE %][% biblionumber %][% END %]">MARC</a></li>
+
+[% IF marcproof %]
+  <li class="active">
+[% ELSE %]
+  <li>
+[% END %]
+   <a href="/cgi-bin/koha/catalogue/MARCproof.pl?biblionumber=[% IF object %][% object %][% ELSE %][% biblionumber %][% END %]">MARC Proof format</a>
+  </li>
 [% END %]
 
 [% IF ( can_view_labeledMARC ) %]
