@@ -288,6 +288,7 @@ function printOrder(theForm) {
             <table id="orders">
                 <thead>
                     <tr>
+                        <th>Purchase order no.</th>
                         <th>Order</th>
                         <th class="gste">RRP tax exc.</th>
                         <th class="gste">ecost tax exc.</th>
@@ -313,6 +314,7 @@ function printOrder(theForm) {
                         <th>Total (GST [% foot_loo.gstgsti %])</th>
                         <th class="gste">&nbsp;</th>
                         <th class="gste">&nbsp;</th>
+                        <th class="gste">&nbsp;</th>
                         <th class="gsti">&nbsp;</th>
                         <th class="gsti">&nbsp;</th>
                         <th>[% foot_loo.quantity %]</th>
@@ -331,6 +333,7 @@ function printOrder(theForm) {
                 [% END %]
                 <tr>
                     <th>Total ([% currency %])</th>
+                    <th class="gste">&nbsp;</th>
                     <th class="gste">&nbsp;</th>
                     <th class="gste">&nbsp;</th>
                     <th class="gsti">&nbsp;</th>
@@ -352,6 +355,7 @@ function printOrder(theForm) {
                 <tbody>
                 [% FOREACH books_loo IN books_loop %]
                     [% IF ( books_loo.order_received ) %]<tr class="disabled">[% ELSE %][% IF ( books_loo.toggle ) %]<tr class="highlight">[% ELSE %]<tr>[% END %][% END %]
+                        <td>[% books_loo.purchaseordernumber %]</td>
                         <td>
                             <p>[% IF ( books_loo.order_received ) %] (rcvd)[% END %]
                                 <a href="/cgi-bin/koha/catalogue/detail.pl?biblionumber=[% books_loo.biblionumber %]">[% books_loo.title |html %]</a> by [% books_loo.author %]
