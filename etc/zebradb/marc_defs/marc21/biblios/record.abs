@@ -86,6 +86,7 @@ melm 050        LC-call-number:w,LC-call-number:p,LC-call-number:s
 melm 052        Geographic-class
 melm 060        NLM-call-number
 melm 070        NAL-call-number
+melm 072$a      agris-code
 melm 080        UDC-classification
 melm 082        Dewey-classification:w,Dewey-classification:s
 melm 084$9      Koha-Auth-Number
@@ -207,6 +208,7 @@ melm 658$c      curriculum:w,curriculum:p,Subject,Subject:p
 melm 658        Subject,Subject:p
 melm 690$9      Koha-Auth-Number
 melm 690        Subject,Subject:p
+melm 692$a      fao-lib-subject,fao-lib-subject:p
 
 melm 700$9      Cross-Reference,Koha-Auth-Number
 melm 700$a      Author,Author:p
@@ -273,6 +275,7 @@ melm 830$w      Record-control-number
 melm 830$9      Koha-Auth-Number
 melm 830        Title,Title-series:w,Title-series:p
 melm 840        Title,Title-series:w,Title-series:p
+melm 919        fao-file-assignment
 
 ###############################
 # Koha Local-Use Biblio Indexes
