@@ -294,3 +294,7 @@ att 9658    curriculum
 # UNFAO additions
 att 9980    media
 att 9981    content
+att 9982    fao-file-assignment
+att 9983    fao-lib-subject
+att 9984    agris-category
+att 9985    agris-code
