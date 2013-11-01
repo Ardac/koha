@@ -8,6 +8,7 @@
 
 <div id="opac-main-search" class="yui-g">
 
+<!--
 <a class="logo" href="/cgi-bin/koha/opac-main.pl">
   [% UNLESS ( opacsmallimage ) %]
       [% UNLESS ( LibraryName ) %]
@@ -23,6 +24,8 @@
       [% END %]
   [% END %]
 </a>
+-->
+<h1 id="libraryname"></h1>
 
 <div id="fluid">
 
