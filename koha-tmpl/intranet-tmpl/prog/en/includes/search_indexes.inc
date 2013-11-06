@@ -21,6 +21,8 @@
     <option value="pb">Publisher</option>
     <option value="ln,rtrn">Language</option>
     <option value="su">Subject</option>
+    <option value="agris-category">Agris category</option>
+    <option value="fao-lib-subject">Library subject</option>
     <option value="kw,Report-number">Report Number</option>
     <option value="nt">Notes</option>
 </select>
