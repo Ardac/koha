@@ -272,8 +272,29 @@
     [% END %]
 </fieldset>
     </fieldset>
+
 <!-- /AVAILABILITY LIMITS -->
 
+<div id="advsearch-file-assignment" class="advsearch">
+<fieldset id="fileassignment"><legend>File assignment</legend>
+    <h3>Limit to any of the following</h3>
+    <p>
+    <table>
+    <tbody>
+    <tr>
+    <td><input id="fa_libmat" type="checkbox" name="limit" value="fao-file-assignment:Library material"/>
+        <label for="fa_libmat"> Library material</label>
+    </td>
+    <td><input type="checkbox" id="fa_faodoc" name="fa_faodoc" value="fao-file-assignment:FAO document"/>
+        <label for="fa_faodoc"> FAO Document</label>
+    </td>
+    <td><input type="checkbox" id="fa_agris" name="limit" value="fao-file-assignment:AGRIS"/>
+        <label for="fa_agris"> AGRIS </label>
+    </td>
+    </tbody>
+    </table>
+    </p>
+</fieldset>
 <!-- RANK LIMITS -->
 <fieldset id="sortby"><legend>Sorting</legend>
     <p>
@@ -282,6 +303,7 @@
     </select>
         </p>
 </fieldset>
+</div>
 <!-- /RANK LIMITS -->
 
 <!-- SEARCH BUTTONS -->
