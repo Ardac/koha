@@ -66,7 +66,8 @@ sub retrieve_concept {
     my $language = shift;
     if ( $termcode && $termcode =~ m/(\d+)/ ) {
         $termcode = $1;
-    } else {
+    }
+    else {
         return;
     }
     my %lang_map = (
@@ -84,7 +85,7 @@ sub retrieve_concept {
     $concept_hash->{termcode} =~ s/\D//g;    # remove surrounding [ ]
     my $other_avail_lang = {};
 
-    my $labels  = encode( 'UTF-8', shift @concept_array);
+    my $labels = encode( 'UTF-8', shift @concept_array );
     my $arr_ref = [];
     if ( $labels =~ m/\[(.*)\]/ ) {
         $labels = $1;
@@ -92,7 +93,7 @@ sub retrieve_concept {
         while (@l_arr) {
             my $term   = shift @l_arr;
             my $l_lang = shift @l_arr;
-            if ($l_lang !~m/^\p{PosixUpper}{2}$/) {
+            if ( $l_lang !~ m/^\p{PosixUpper}{2}$/ ) {
                 $term .= ", $l_lang";
                 $l_lang = shift @l_arr;
             }
@@ -110,7 +111,8 @@ sub retrieve_concept {
     $concept_hash->{other_lang} = [];
     for my $code ( sort keys %{$other_avail_lang} ) {
         push @{ $concept_hash->{other_lang} },
-          { langcode => $code,
+          {
+            langcode => $code,
             langname => $other_avail_lang->{$code},
           };
     }
@@ -132,7 +134,8 @@ sub retrieve_concept {
             }
             if ($term_label) {
                 push @{$tmp_arr},
-                  { termcode => $tc,
+                  {
+                    termcode => $tc,
                     label    => $term_label,
                     language => $language,
                   };
@@ -151,7 +154,7 @@ sub retrieve_concept {
 
 sub _string2array {
     my $s = shift;
-    my $string = encode('UTF-8', $s);
+    my $string = encode( 'UTF-8', $s );
     $string =~ s/^\[//;
     $string =~ s/\]$//;
     return split /,\s*/, $string;
