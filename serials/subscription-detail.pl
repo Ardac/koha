@@ -154,6 +154,8 @@ if ( defined $subscriptionid ) {
         $tmpl_infos->{spent_exists} = 1;
     }
 }
+my $ord = C4::Serials::get_linked_orders($subs->{bibnum},$subs->{aqbooksellerid});
+
 
 $template->param(
     subscriptionid => $subscriptionid,
@@ -174,6 +176,7 @@ $template->param(
     intranetcolorstylesheet => C4::Context->preference('intranetcolorstylesheet'),
     irregular_issues => scalar @irregular_issues,
     default_bib_view => $default_bib_view,
+    orders           => $ord,
     (uc(C4::Context->preference("marcflavour"))) => 1,
     show_acquisition_details => defined $tmpl_infos->{ordered_exists} || defined $tmpl_infos->{spent_exists} ? 1 : 0,
     basketno => $order->{basketno},
