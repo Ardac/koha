@@ -391,6 +391,19 @@ $(document).ready(function() {
     </div>
     </div>
     </div>
+    <div id="subscription_orders">
+    <div class="yui-g">
+    <div class="rows">
+    <ol>
+        [% FOREACH order IN orders %]
+        <li><span class="label">[% order.purchaseordernumber -%]:</span>
+        <a href="/cgi-bin/koha/acqui/basket.pl?basketno=[% order.basketno -%]"> ([% order.basketno -%]) </a>
+        </li>
+        [% END %]
+    </ol>
+    </div>
+    </div>
+    </div>
     </div>
 
     [% IF ( show_acquisition_details ) %]
@@ -430,19 +443,6 @@ $(document).ready(function() {
 
 
 
-    <div id="subscription_orders">
-    <div class="yui-g">
-    <div class="rows">
-    <ol>
-        [% FOREACH order IN orders %]
-        <li><span class="label">[% order.purchaseordernumber -%]:</span>
-        <a href="/cgi-bin/koha/acqui/basket.pl?basketno=[% order.basketno -%]"> ([% order.basketno -%]) </a>
-        </li>
-        [% END %]
-    </ol>
-    </div>
-    </div>
-    </div>
     </div>
 </div>
 </div>
