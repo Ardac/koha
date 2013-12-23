@@ -80,12 +80,22 @@ function addTermSaveButton(termcode, labels, language) {
 
 }
 
+function remListItem() {
+    $(this).parents("li").remove();
+}
+
+
 function saveTerm(termcode, labels, termlang) {
     /* Write the term in the save box */
     var list = document.getElementById('savedTerms');
     var newLi = document.createElement("li");
     var txt = document.createTextNode(unescape(labels) + ': ' + termcode + ': (' + termlang + ')');
     newLi.appendChild(txt);
+    var del_btn = document.createElement("input");
+    del_btn.type = "button";
+    del_btn.value = "delete";
+    del_btn.onclick = remListItem;
+    newLi.appendChild(del_btn);
     list.appendChild(newLi);
 }
 
@@ -108,8 +118,13 @@ function saveCorrectTerm(resp) {
     var div = document.getElementById('savedTerms');
     var newPara = document.createElement("li");
     var txt = document.createTextNode(saveConcept.label + ': ' + saveConcept.termcode + ': (' + saveConcept.termlang + ')');
-        newPara.appendChild(txt);
-        div.appendChild(newPara);
+    newPara.appendChild(txt);
+    var del_btn = document.createElement("input");
+    del_btn.type = "button";
+    del_btn.value = "delete";
+    del_btn.onclick = remListItem;
+    newPara.appendChild(del_btn);
+    div.appendChild(newPara);
 }
 
 function searchResults(results) {
