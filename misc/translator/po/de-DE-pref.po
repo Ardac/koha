@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Koha 3.12\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-05-16 03:26+0200\n"
-"PO-Revision-Date: 2013-10-09 08:47+0000\n"
+"PO-Revision-Date: 2013-12-18 11:20+0000\n"
 "Last-Translator: Katrin <katrin.fischer@bsz-bw.de>\n"
 "Language-Team: Koha Translation Team <koha-translate@lists.koha-community.org>\n"
 "Language: de\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Pootle 2.5.0\n"
-"X-POOTLE-MTIME: 1381308454.0\n"
+"X-POOTLE-MTIME: 1387365624.0\n"
 "X-Poedit-SourceCharset: utf-8\n"
 
 # Acquisitions
@@ -796,8 +796,8 @@ msgid "cataloguing.pref#item-level_itypes# Use the item type of the"
 msgstr "Verwende den Medientyp des"
 
 # Cataloging > Record Structure
-msgid "cataloguing.pref#item-level_itypes# as the authoritative item type (for determining circulation and fines rules, etc)."
-msgstr "als den maßgeblichen Medientyp (für die Bestimmung von Ausleih- und Gebührenregeln etc.)"
+msgid "cataloguing.pref#item-level_itypes# as the authoritative item type (for determining circulation and fines rules, for displaying an item type icon on either opac detail or results page, etc)."
+msgstr " als ausschlaggebenden Medientyp (für die Ermittlung von Ausleihkonditionen, für die Anzeige des Medientypicons im OPAC und der Trefferliste, etc.)."
 
 # Cataloging > Record Structure
 msgid "cataloguing.pref#item-level_itypes# biblio record"

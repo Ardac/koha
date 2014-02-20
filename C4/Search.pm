@@ -36,6 +36,7 @@ use URI::Escape;
 use Business::ISBN;
 use MARC::Record;
 use MARC::Field;
+use Encode qw/decode_utf8/;
 use utf8;
 use vars qw($VERSION @ISA @EXPORT @EXPORT_OK %EXPORT_TAGS $DEBUG);
 
@@ -503,8 +504,8 @@ sub getRecords {
                       $size > $facets_maxrecs ? $facets_maxrecs : $size;
                     for my $facet (@$facets) {
                         for ( my $j = 0 ; $j < $jmax ; $j++ ) {
-                            my $render_record =
-                              $results[ $i - 1 ]->record($j)->render();
+                            my $render_record = decode_utf8(
+                              $results[ $i - 1 ]->record($j)->render());
                             my @used_datas = ();
                             foreach my $tag ( @{ $facet->{tags} } ) {
 
@@ -847,6 +848,7 @@ sub _build_weighted_query {
     my $stemming      = C4::Context->preference("QueryStemming")     || 0;
     my $weight_fields = C4::Context->preference("QueryWeightFields") || 0;
     my $fuzzy_enabled = C4::Context->preference("QueryFuzzy")        || 0;
+    $operand =~ s/"/ /g;    # Bug 7518: searches with quotation marks don't work
 
     my $weighted_query .= "(rk=(";    # Specifies that we're applying rank
 
@@ -1187,7 +1189,10 @@ sub parseQuery {
             next unless $operands[$ii];
             $query .= $operators[ $ii - 1 ] eq 'or' ? ' || ' : ' && '
               if ($query);
-            if ( $indexes[$ii] =~ m/su-/ ) {
+            if ( $operands[$ii] =~ /^[^"]\W*[-|_\w]*:\w.*[^"]$/ ) {
+                $query .= $operands[$ii];
+            }
+            elsif ( $indexes[$ii] =~ m/su-/ ) {
                 $query .= $indexes[$ii] . '(' . $operands[$ii] . ')';
             }
             else {
@@ -1280,7 +1285,7 @@ sub buildQuery {
 
     my $cclq       = 0;
     my $cclindexes = getIndexes();
-    if ( $query !~ /\s*ccl=/ ) {
+    if ( $query !~ /\s*(ccl=|pqf=|cql=)/ ) {
         while ( !$cclq && $query =~ /(?:^|\W)([\w-]+)(,[\w-]+)*[:=]/g ) {
             my $dx = lc($1);
             $cclq = grep { lc($_) eq $dx } @$cclindexes;

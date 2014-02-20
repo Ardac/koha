@@ -6950,6 +6950,38 @@ if ( CheckVersion($DBversion) ) {
     SetVersion ($DBversion);
 }
 
+$DBversion = "3.12.07.001";
+if(CheckVersion($DBversion)) {
+    $dbh->do("ALTER TABLE deleteditems MODIFY materials text;");
+    print "Upgrade to $DBversion done (Bug 11275: alter deleteditems.materials from varchar(10) to text)\n";
+    SetVersion($DBversion);
+}
+
+$DBversion = "3.12.08.000";
+if ( CheckVersion($DBversion) ) {
+    print "Upgrade to $DBversion done (3.12.8 release)\n";
+    SetVersion ($DBversion);
+}
+
+$DBversion = "3.12.09.000";
+if ( CheckVersion($DBversion) ) {
+    print "Upgrade to $DBversion done (3.12.9 release)\n";
+    SetVersion ($DBversion);
+}
+
+$DBversion = "3.12.10.000";
+if ( CheckVersion($DBversion) ) {
+    print "Upgrade to $DBversion done (3.12.10 release)\n";
+    SetVersion ($DBversion);
+}
+
+$DBversion = "3.12.10.001";
+if(CheckVersion($DBversion)) {
+    $dbh->do("UPDATE marc_subfield_structure SET maxlength=9999 WHERE maxlength IS NULL OR maxlength=0;");
+    print "Upgrade to $DBversion done (Bug 8018: new subfields have a default max length of zero)\n";
+    SetVersion($DBversion);
+}
+
 =head1 FUNCTIONS
 
 =head2 TableExists($table)

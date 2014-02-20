@@ -276,6 +276,7 @@ if ( $op eq 'add_form' ) {
         my %row_data;    # get a fresh hash for the row data
         $row_data{'new_subfield'} = 1;
         $row_data{'subfieldcode'} = '';
+        $row_data{'maxlength'} = 9999;
 
         $row_data{tab} = CGI::scrolling_list(
             -name   => 'tab',
@@ -425,7 +426,7 @@ elsif ( $op eq 'add_validate' ) {
         my $isurl  = $input->param("isurl$i") ? 1 : 0;
         my $link   = $link[$i];
         my $defaultvalue = $defaultvalue[$i];
-        my $maxlength = $maxlength[$i];
+        my $maxlength = $maxlength[$i] ? $maxlength[$i] : 9999;
         
         if (defined($liblibrarian) && $liblibrarian ne "") {
             unless ( C4::Context->config('demo') eq 1 ) {

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Koha\n"
 "POT-Creation-Date: 2013-05-07 08:52+0200\n"
-"PO-Revision-Date: 2013-09-18 17:17+0000\n"
+"PO-Revision-Date: 2013-12-24 10:25+0000\n"
 "Last-Translator: vfernandes <vfernandes@keep.pt>\n"
 "Language-Team: French (France) (http://www.transifex.com/projects/p/koha/language/fr_FR/)\n"
 "Language: pt\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Pootle 2.5.0\n"
-"X-POOTLE-MTIME: 1379524634.0\n"
+"X-POOTLE-MTIME: 1387880740.0\n"
 
 # Acquisitions
 msgid "acquisitions.pref"
@@ -794,8 +794,8 @@ msgid "cataloguing.pref#item-level_itypes# Use the item type of the"
 msgstr "Usar o tipo de documento do"
 
 # Cataloging > Record Structure
-msgid "cataloguing.pref#item-level_itypes# as the authoritative item type (for determining circulation and fines rules, etc)."
-msgstr "como tipo de documento autoritário (para determinar regras de circulação e multas, etc)."
+msgid "cataloguing.pref#item-level_itypes# as the authoritative item type (for determining circulation and fines rules, for displaying an item type icon on either opac detail or results page, etc)."
+msgstr "como tipo de documento autoritário (para determinar regras de circulação ou multas, para mostrar um ícone do tipo na página de detalhes ou de resultados, etc)."
 
 # Cataloging > Record Structure
 msgid "cataloguing.pref#item-level_itypes# biblio record"

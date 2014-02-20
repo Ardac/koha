@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-05-23 08:15+0200\n"
-"PO-Revision-Date: 2013-10-06 09:54+0000\n"
+"PO-Revision-Date: 2014-01-21 15:08+0000\n"
 "Last-Translator: Josef <josef.moravec@knihovna-uo.cz>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: cs\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 "X-Generator: Pootle 2.5.0\n"
-"X-POOTLE-MTIME: 1381053247.0\n"
+"X-POOTLE-MTIME: 1390316927.0\n"
 
 # Acquisitions
 msgid "acquisitions.pref"
@@ -795,8 +795,10 @@ msgid "cataloguing.pref#item-level_itypes# Use the item type of the"
 msgstr "Použij typ jednotky"
 
 # Cataloging > Record Structure
-msgid "cataloguing.pref#item-level_itypes# as the authoritative item type (for determining circulation and fines rules, etc)."
-msgstr "jako autoritní holdingový záznam (pro určení pravidel půjčování a pokutování, atd.)"
+msgid "cataloguing.pref#item-level_itypes# as the authoritative item type (for determining circulation and fines rules, for displaying an item type icon on either opac detail or results page, etc)."
+msgstr ""
+"jako určující typ jednotky (pro použití v pravidlech výpůjček a upomínek, "
+"pro zobrazení ikon typu jednotky ve vyhledávání atd.)"
 
 # Cataloging > Record Structure
 msgid "cataloguing.pref#item-level_itypes# biblio record"
@@ -4969,4 +4971,3 @@ msgstr "Vracet pouze"
 # Web services > Reporting
 msgid "web_services.pref#SvcMaxReportRows# rows of a report requested via the reports web service."
 msgstr "řádků z výstupů vyžádaných pomocí webové služby."
-
