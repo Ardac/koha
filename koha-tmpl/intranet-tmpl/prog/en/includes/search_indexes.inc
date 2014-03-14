@@ -15,7 +15,7 @@
     <option value="au">Author</option>
     <option value="au,phr">Author as Phrase</option>
     <option value="cpn">Corporate Author</option>
-    <option value="cfn,phr">Conference Author as Phrase</option>
+    <option value="cpn,phr">Corporate Author as Phrase</option>
     <option value="cfn">Conference Name</option>
     <option value="cfn,phr">Conference Name as Phrase</option>
     <option value="pb">Publisher</option>
