@@ -1180,7 +1180,7 @@ sub NewOrder {
         ");
         $sth->execute($ordernumber);
     }
-    my $ordernorm = sprintf '%08d', $ordernumber;
+    my $ordernorm = sprintf '%8d', $ordernumber;
     if ($orderinfo->{purchaseordernumber}=~s/X{8}$/$ordernorm/) {
         my $year  = localtime->year() + 1900;
         $orderinfo->{purchaseordernumber} .= " $year";
