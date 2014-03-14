@@ -58,12 +58,12 @@
       <li id="collections_id">Collections
         <ul>
           <li>
-<a href="/cgi-bin/koha/opac-search.pl?[% query_cgi |html %][% limit_cgi_mono |html %]">
+<a href="/cgi-bin/koha/catalogue/search.pl?[% query_cgi |html %][% limit_cgi_mono |html %]">
     Monograph Titles
 </a>
           </li>
           <li>
-<a href="/cgi-bin/koha/opac-search.pl?[% query_cgi |html  %][% limit_cgi_serial |html %]">
+<a href="/cgi-bin/koha/catalogue/search.pl?[% query_cgi |html  %][% limit_cgi_serial |html %]">
     Serials Titles
 </a>
           </li>
