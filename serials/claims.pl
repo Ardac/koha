@@ -77,13 +77,12 @@ if ($supplierid) {
 my $branchloop = GetBranchesLoop();
 unshift @$branchloop, {value=> 'all',name=>''};
 
-my $preview = 0;
-if ( $op && $op eq 'preview' ) {
+my $preview=0;
+if($op && $op eq 'preview'){
     $preview = 1;
-}
-else {
-    my @serialnums = $input->param('serialid');
-    if (@serialnums) {    # i.e. they have been flagged to generate claims
+} else {
+    my @serialnums=$input->param('serialid');
+    if (@serialnums) { # i.e. they have been flagged to generate claims
         my $format = 'email';
         my $sub    = $input->param('submit_form');
         if ( $sub =~ m/Download letter/i ) {
@@ -118,5 +117,5 @@ $template->param(
     dateformat_metric => 1,    # kludge dateformat not working correctly
         branchloop   => $branchloop,
         (uc(C4::Context->preference("marcflavour"))) => 1
-);
+        );
 output_html_with_http_headers $input, $cookie, $template->output;
