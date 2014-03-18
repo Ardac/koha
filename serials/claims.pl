@@ -21,7 +21,6 @@
 use strict;
 use warnings;
 use CGI;
-use Readonly;
 use C4::Auth;
 use C4::Serials;
 use C4::Acquisition;
@@ -51,10 +50,11 @@ my ($template, $loggedinuser, $cookie)
             });
 
 # supplierlist is returned in name order
-Readonly::Scalar my $MAX_SUPPLIER_LEN => 90;
+my $MAX_SUPPLIER_LEN = 90;
 my $supplierlist = GetSuppliersWithLateIssues();
+my $count_sth = get_sth();
 for my $s (@{$supplierlist} ) {
-    $s->{count} = scalar  GetLateOrMissingIssues($s->{id}, q{}, $order);
+    $s->{count} = countLateOrMissingIssues($count_sth, $s->{id});
     if (length $s->{name} > $MAX_SUPPLIER_LEN) {
         $s->{name} = substr $s->{name}, 0, $MAX_SUPPLIER_LEN;
     }
@@ -119,3 +119,28 @@ $template->param(
         (uc(C4::Context->preference("marcflavour"))) => 1
         );
 output_html_with_http_headers $input, $cookie, $template->output;
+
+# speed up getting the late count
+
+
+sub countLateOrMissingIssues {
+    my ( $sth, $supplierid ) = @_;
+    $sth->execute($supplierid);
+    my $issuelist = $sth->fetchall_arrayref();
+    return $issuelist->[0]->[0];
+}
+
+sub get_sth {
+    my $dbh = C4::Context->dbh;
+    my $sth = $dbh->prepare(
+        'SELECT count(*) as value
+            FROM      serial 
+           LEFT JOIN subscription
+           ON serial.subscriptionid=subscription.subscriptionid 
+          WHERE
+          (serial.STATUS = 4 OR ((planneddate < now() AND serial.STATUS =1)
+          OR serial.STATUS = 3 OR serial.STATUS = 7))
+                AND subscription.aqbooksellerid= ?'
+    );
+    return $sth;
+}
