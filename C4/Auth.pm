@@ -205,6 +205,7 @@ sub get_template_and_user {
             $template->param( CAN_user_serials          => 1 );
             $template->param( CAN_user_reports          => 1 );
             $template->param( CAN_user_staffaccess      => 1 );
+            $template->param( CAN_user_manageILL        => 1 );
             foreach my $module (keys %$all_perms) {
                 foreach my $subperm (keys %{ $all_perms->{$module} }) {
                     $template->param( "CAN_user_${module}_${subperm}" => 1 );
@@ -358,6 +359,7 @@ sub get_template_and_user {
             OPACLocalCoverImages        => C4::Context->preference('OPACLocalCoverImages'),
             AllowMultipleCovers         => C4::Context->preference('AllowMultipleCovers'),
             EnableBorrowerFiles         => C4::Context->preference('EnableBorrowerFiles'),
+            ILLModule                   => C4::Context->preference('ILLModule'),
         );
     }
     else {
@@ -456,6 +458,7 @@ sub get_template_and_user {
             SyndeticsSeries              => C4::Context->preference("SyndeticsSeries"),
             SyndeticsCoverImageSize      => C4::Context->preference("SyndeticsCoverImageSize"),
             OPACLocalCoverImages         => C4::Context->preference("OPACLocalCoverImages"),
+            ILLModule                    => C4::Context->preference("ILLModule"),
         );
 
         $template->param(OpacPublic => '1') if ($user || C4::Context->preference("OpacPublic"));

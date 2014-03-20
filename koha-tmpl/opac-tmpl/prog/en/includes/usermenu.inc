@@ -32,6 +32,14 @@
   [% IF ( virtualshelves ) %] 
   [% IF ( listsview ) %]<li class="active">[% ELSE %]<li>[% END %]<a href="/cgi-bin/koha/opac-shelves.pl?display=privateshelves">my lists</a></li>
   [% END %]
+  [% IF ILLModule %]
+    [% IF ill %]
+        <li class="active">
+    [% ELSE %]
+        <li>
+    [% END %]
+    <a href="/cgi-bin/koha/opac-ill.pl">my inter-library loans</a></li>
+  [% END %]
 
 </ul>
 </div>

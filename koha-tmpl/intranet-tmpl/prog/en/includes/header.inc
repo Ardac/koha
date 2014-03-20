@@ -37,6 +37,11 @@
                             [% IF ( CAN_user_parameters ) %]
                             <li><a href="/cgi-bin/koha/admin/admin-home.pl">Administration</a></li>
                             [% END %]
+                            [% IF CAN_user_manageILL %]
+                            <li>
+                            <a href="/cgi-bin/koha/ill/ill-requests.pl">ILL Requests</a>
+                            </li>
+                            [% END %]
                             <li><a href="/cgi-bin/koha/about.pl">About Koha</a></li>
                             </ul>
                         </div>

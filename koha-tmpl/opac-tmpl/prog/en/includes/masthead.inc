@@ -129,6 +129,9 @@
   [% ELSIF ( OPACViewOthersSuggestions ) %]<span class="pipe"> | </span><a href="/cgi-bin/koha/opac-suggestions.pl">Purchase suggestions</a>
   [% END %]
 [% END %]
+[% IF ILLModule -%]
+ <span class="pipe"> | </span><a href="/cgi-bin/koha/opac-ill-request.pl">Inter-Library Loan</a>
+ [% END %]
 </div>
  </div>
 </div>

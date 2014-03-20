@@ -170,6 +170,7 @@
 			[% END %]
 					</select></li>
 	<li><label for="reservefee">Hold fee: </label><input type="text" name="reservefee" id="reservefee" size="6" value="[% reservefee %]" /></li>
+	<li><label for="illlimit">ILL Request limit: </label><input type="text" name="illlimit" id="illlimit" size="6" value="[% illlimit %]" /></li>
 	<li><label for="category_type">Category type: </label> <select name="category_type" id="category_type">
                         [% IF ( type_n ) %]<option value="" selected="selected">Select a category type</option>[% ELSE %]<option value="">Select a category type</option>[% END %]
 					[% IF ( type_A ) %]<option value="A" selected="selected">Adult</option>[% ELSE %]<option value="A">Adult</option>[% END %]
@@ -227,6 +228,7 @@ Confirm deletion of category [% categorycode |html %][% END %]</legend>
 	<tr><th scope="row">Enrollment fee: </th><td>[% enrolmentfee %]</td></tr>
 	<tr><th scope="row">Receives overdue notices: </th><td>[% IF ( overduenoticerequired ) %]Yes[% ELSE %]No[% END %]</td></tr>
 	<tr><th scope="row">Lost items in staff client</th><td>[% IF ( hidelostitems ) %]Hidden by default[% ELSE %]Shown[% END %]</td></tr>
+	<tr><th scope="row">ILL Request limit: </th><td>[% illlimit %]</td></tr>
 	<tr><th scope="row">Hold fee: </th><td>[% reservefee %]</td></tr>
 </table>
 		<fieldset class="action">[% IF ( totalgtzero ) %]
@@ -289,6 +291,7 @@ Confirm deletion of category [% categorycode |html %][% END %]</legend>
 			<th scope="col">Overdue</th>
             <th scope="col">Lost items</th>
  			<th scope="col">Hold fee</th>
+			<th scope="col">ILL Req. limit</th>
             [% IF ( EnhancedMessagingPreferences ) %]
             <th scope="col">Messaging</th>
             [% END %]
@@ -322,6 +325,7 @@ Confirm deletion of category [% categorycode |html %][% END %]</legend>
                         <td>[% IF ( loo.overduenoticerequired ) %]Yes[% ELSE %]No[% END %]</td>
                         <td>[% IF ( loo.hidelostitems ) %]Hidden[% ELSE %]Shown[% END %]</td>
                         <td>[% loo.reservefee %]</td>
+                        <td>[% loo.illlimit %]</td>
                         [% IF ( EnhancedMessagingPreferences ) %]
                         <td style="white-space: nowrap; font-size:80%;">
                             [% IF ( loo.messaging_prefs ) %]

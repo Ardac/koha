@@ -92,7 +92,7 @@ if ($op eq 'add_form') {
 	my $data;
 	if ($categorycode) {
 		my $dbh = C4::Context->dbh;
-		my $sth=$dbh->prepare("select categorycode,description,enrolmentperiod,enrolmentperioddate,upperagelimit,dateofbirthrequired,enrolmentfee,issuelimit,reservefee,hidelostitems,overduenoticerequired,category_type from categories where categorycode=?");
+		my $sth=$dbh->prepare("select categorycode,description,enrolmentperiod,enrolmentperioddate,upperagelimit,dateofbirthrequired,enrolmentfee,issuelimit,reservefee,hidelostitems,overduenoticerequired,category_type,illlimit from categories where categorycode=?");
 		$sth->execute($categorycode);
 		$data=$sth->fetchrow_hashref;
 		$sth->finish;
@@ -109,6 +109,7 @@ if ($op eq 'add_form') {
 				overduenoticerequired   => $data->{'overduenoticerequired'},
 				issuelimit              => $data->{'issuelimit'},
 				reservefee              => sprintf("%.2f",$data->{'reservefee'}),
+                illlimit                => $data->{illlimit},
                                 hidelostitems           => $data->{'hidelostitems'},
 				category_type           => $data->{'category_type'},
 				DHTMLcalendar_dateformat => C4::Dates->DHTMLcalendar(),
@@ -131,12 +132,12 @@ if ($op eq 'add_form') {
 	}
 	
 	if ($is_a_modif) {
-            my $sth=$dbh->prepare("UPDATE categories SET description=?,enrolmentperiod=?, enrolmentperioddate=?,upperagelimit=?,dateofbirthrequired=?,enrolmentfee=?,reservefee=?,hidelostitems=?,overduenoticerequired=?,category_type=? WHERE categorycode=?");
-            $sth->execute(map { $input->param($_) } ('description','enrolmentperiod','enrolmentperioddate','upperagelimit','dateofbirthrequired','enrolmentfee','reservefee','hidelostitems','overduenoticerequired','category_type','categorycode'));
+            my $sth=$dbh->prepare("UPDATE categories SET description=?,enrolmentperiod=?, enrolmentperioddate=?,upperagelimit=?,dateofbirthrequired=?,enrolmentfee=?,reservefee=?,hidelostitems=?,overduenoticerequired=?,category_type=?,illlimit=? WHERE categorycode=?");
+            $sth->execute(map { $input->param($_) } ('description','enrolmentperiod','enrolmentperioddate','upperagelimit','dateofbirthrequired','enrolmentfee','reservefee','hidelostitems','overduenoticerequired','category_type','illlimit','categorycode'));
             $sth->finish;
         } else {
-            my $sth=$dbh->prepare("INSERT INTO categories  (categorycode,description,enrolmentperiod,enrolmentperioddate,upperagelimit,dateofbirthrequired,enrolmentfee,reservefee,hidelostitems,overduenoticerequired,category_type) values (?,?,?,?,?,?,?,?,?,?,?)");
-            $sth->execute(map { $input->param($_) } ('categorycode','description','enrolmentperiod','enrolmentperioddate','upperagelimit','dateofbirthrequired','enrolmentfee','reservefee','hidelostitems','overduenoticerequired','category_type'));
+            my $sth=$dbh->prepare("INSERT INTO categories  (categorycode,description,enrolmentperiod,enrolmentperioddate,upperagelimit,dateofbirthrequired,enrolmentfee,reservefee,hidelostitems,overduenoticerequired,category_type,illlimit) values (?,?,?,?,?,?,?,?,?,?,?)");
+            $sth->execute(map { $input->param($_) } ('categorycode','description','enrolmentperiod','enrolmentperioddate','upperagelimit','dateofbirthrequired','enrolmentfee','reservefee','hidelostitems','overduenoticerequired','category_type','illlimit'));
             $sth->finish;
         }
     if (C4::Context->preference('EnhancedMessagingPreferences')) {
@@ -159,7 +160,7 @@ if ($op eq 'add_form') {
 	$sth->finish;
 	$template->param(total => $total->{'total'});
 	
-	my $sth2=$dbh->prepare("select categorycode,description,enrolmentperiod,enrolmentperioddate,upperagelimit,dateofbirthrequired,enrolmentfee,issuelimit,reservefee,hidelostitems,overduenoticerequired,category_type from categories where categorycode=?");
+	my $sth2=$dbh->prepare("select categorycode,description,enrolmentperiod,enrolmentperioddate,upperagelimit,dateofbirthrequired,enrolmentfee,issuelimit,reservefee,hidelostitems,overduenoticerequired,category_type,illlimit from categories where categorycode=?");
 	$sth2->execute($categorycode);
 	my $data=$sth2->fetchrow_hashref;
 	$sth2->finish;
@@ -175,6 +176,7 @@ if ($op eq 'add_form') {
                                 enrolmentfee            =>  sprintf("%.2f",$data->{'enrolmentfee'}),
                                 overduenoticerequired   => $data->{'overduenoticerequired'},
                                 issuelimit              => $data->{'issuelimit'},
+                                illlimit                => $data->{illlimit},
                                 reservefee              =>  sprintf("%.2f",$data->{'reservefee'}),
                                 hidelostitems           => $data->{'hidelostitems'},
                                 category_type           => $data->{'category_type'},
@@ -208,6 +210,7 @@ if ($op eq 'add_form') {
 				enrolmentfee            => sprintf("%.2f",$results->[$i]{'enrolmentfee'}),
 				overduenoticerequired   => $results->[$i]{'overduenoticerequired'},
 				issuelimit              => $results->[$i]{'issuelimit'},
+        illlimit                => $results->[$i]->{illlimit},
 				reservefee              => sprintf("%.2f",$results->[$i]{'reservefee'}),
                                 hidelostitems           => $results->[$i]{'hidelostitems'},
 				category_type           => $results->[$i]{'category_type'},
