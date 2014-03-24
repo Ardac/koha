@@ -50,18 +50,7 @@ my ($template, $loggedinuser, $cookie)
             });
 
 # supplierlist is returned in name order
-my $MAX_SUPPLIER_LEN = 90;
-my $supplierlist = GetSuppliersWithLateIssues();
-my $count_sth = get_sth();
-for my $s (@{$supplierlist} ) {
-    $s->{count} = countLateOrMissingIssues($count_sth, $s->{id});
-    if (length $s->{name} > $MAX_SUPPLIER_LEN) {
-        $s->{name} = substr $s->{name}, 0, $MAX_SUPPLIER_LEN;
-    }
-    if ($supplierid && $s->{id} == $supplierid) {
-        $s->{selected} = 1;
-    }
-}
+my $supplierlist = get_suppliers_with_late_issues();
 
 my $letters = get_letters('claimissues');
 my $letter =
@@ -104,7 +93,7 @@ $template->param(
     letters                  => $letters,
     letter                   => $letter,
     order                    => $order,
-    supplier_loop            => $supplierlist,
+    suploop                  => $supplierlist,
     phone                    => $supplierinfo[0]->{phone},
     booksellerfax            => $supplierinfo[0]->{booksellerfax},
     bookselleremail          => $supplierinfo[0]->{bookselleremail},
@@ -120,27 +109,20 @@ $template->param(
         );
 output_html_with_http_headers $input, $cookie, $template->output;
 
-# speed up getting the late count
+sub get_suppliers_with_late_issues {
 
-
-sub countLateOrMissingIssues {
-    my ( $sth, $supplierid ) = @_;
-    $sth->execute($supplierid);
-    my $issuelist = $sth->fetchall_arrayref();
-    return $issuelist->[0]->[0];
-}
-
-sub get_sth {
+    my $sql=<<'ENDSQL';
+select subscription.aqbooksellerid as id, count(*) as count,
+aqbooksellers.name as name from subscription
+left join serial on serial.subscriptionid = subscription.subscriptionid
+left join aqbooksellers ON subscription.aqbooksellerid = aqbooksellers.id
+where subscription.closed = 0
+and subscription.aqbooksellerid != 0
+and (serial.status = 3 or serial.status = 4 or
+( serial.status = 1 and serial.planneddate < now() ) )
+group by subscription.aqbooksellerid
+order by name
+ENDSQL
     my $dbh = C4::Context->dbh;
-    my $sth = $dbh->prepare(
-        'SELECT count(*) as value
-            FROM      serial 
-           LEFT JOIN subscription
-           ON serial.subscriptionid=subscription.subscriptionid 
-          WHERE
-          (serial.STATUS = 4 OR ((planneddate < now() AND serial.STATUS =1)
-          OR serial.STATUS = 3 OR serial.STATUS = 7))
-                AND subscription.aqbooksellerid= ?'
-    );
-    return $sth;
+    return $dbh->selectall_arrayref($sql,{ Slice => {} });
 }

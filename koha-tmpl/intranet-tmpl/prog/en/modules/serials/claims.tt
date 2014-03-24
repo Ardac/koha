@@ -191,12 +191,12 @@ function downloadLetter(theForm) {
 	    <label for="supplierid">Vendor: </label>
 	    <select id="supplierid" name="supplierid">
 	        [% FOREACH suploo IN suploop %]
-	            [% IF ( suploo.selected ) %]
+	            [% IF suploo.id == supplierid %]
 	            <option value="[% suploo.id %]" selected="selected" >
 	            [% ELSE %]
 	            <option value="[% suploo.id %]">
 	            [% END %]
-	                [% suploo.name %]
+	                [% suploo.name | truncate(90) %]
 	                ([% suploo.count %])
 	            </option>
 	        [% END %]
