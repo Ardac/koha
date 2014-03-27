@@ -29,10 +29,10 @@
 </div>[% END %]
 
 <ul>
+    [% IF ( CAN_user_catalogue ) %]<li><a href="#catalog_search">Search the catalog</a></li>[% END %]
     [% IF ( CAN_user_circulate ) %]<li><a href="#circ_search">Check out</a></li>[% END %]
     [% IF ( CAN_user_circulate ) %]<li><a href="#checkin_search">Check in</a></li>[% END %]
     [% IF ( CAN_user_borrowers ) %]<li><a href="#patron_search">Search patrons</a></li>[% END %]
-    [% IF ( CAN_user_catalogue ) %]<li><a href="#catalog_search">Search the catalog</a></li>[% END %]
 </ul>
 
 </div><!-- /header_search -->
