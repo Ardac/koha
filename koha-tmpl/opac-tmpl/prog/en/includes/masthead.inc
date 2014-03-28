@@ -39,9 +39,9 @@
 
 <!--	<select name="idx" id="masthead_search" class="left">
 	[% IF ( ms_kw ) %]
-        <option selected="selected" value="">Library catalog</option>
+        <option selected="selected" value="">All fields</option>
 		[% ELSE %]
-        <option value="">Library catalog</option>
+        <option value="">All fields</option>
 		[% END %]
 		[% IF ( ms_ti ) %]
         <option selected="selected" value="ti">Title</option>
@@ -64,9 +64,9 @@
 		<option value="nb">ISBN</option>
 		[% END %]
 		[% IF ( ms_se ) %]
-        <option selected="selected" value="se">Series</option>
+        <option selected="selected" value="se">Series title</option>
 		[% ELSE %]
-        <option value="se">Series</option>
+        <option value="se">Series title</option>
 		[% END %]
                 [% IF ( numbersphr ) %]
                 [% IF ( ms_callnum ) %]
