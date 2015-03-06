@@ -8,7 +8,7 @@
 # ~ file for STDOUT, default ~/sip.out
 # ~ file for STDERR, default ~/sip.err
 #
-# The STDOUT and STDERR files are only for the SIPServer process itself.
+# The STDOUT and STDERR files are only for the SIPServer startup.
 # Actual SIP communication and transaction logs are handled by Syslog.
 #
 # Examples:
@@ -37,8 +37,8 @@ errfile=${3:-$HOME/sip.err};
 if [ $sipconfig ]; then
 	echo "Running with config file located in $sipconfig" ;
 	echo "Calling (backgrounded):";
-    echo "perl ./SIPServer.pm $sipconfig >>$outfile 2>>$errfile";
-    perl ./SIPServer.pm $sipconfig >>$outfile 2>>$errfile &
+    echo "./SIPServer.pl $sipconfig >>$outfile 2>>$errfile";
+    ./SIPServer.pl $sipconfig >>$outfile 2>>$errfile &
 
 else
 	echo "Please specify a config file and try again."

@@ -330,5 +330,4 @@ sub read_request {
       syslog( 'LOG_INFO', "INPUT MSG: '$buffer'" );
       return $buffer;
 }
-1;
 __END__
