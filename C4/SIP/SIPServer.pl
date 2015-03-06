@@ -3,10 +3,7 @@ package C4::SIP::SIPServer;
 
 use strict;
 use warnings;
-use FindBin qw($Bin);
-use lib "$Bin";
 use Sys::Syslog qw(syslog);
-use Net::Server::PreFork;
 use IO::Socket::INET;
 use Socket qw(:DEFAULT :crlf);
 require UNIVERSAL::require;
@@ -16,16 +13,9 @@ use C4::SIP::Sip::Configuration;
 use C4::SIP::Sip::Checksum qw(checksum verify_cksum);
 use C4::SIP::Sip::MsgType qw( handle login_core );
 
-use base qw(Net::Server::PreFork);
+use base qw(Net::Server::Fork);
 
 use constant LOG_SIP => "local6"; # Local alias for the logging facility
-
-#
-# Main	# not really, since package SIPServer
-#
-# FIXME: Is this a module or a script?  
-# A script with no MAIN namespace?
-# A module that takes command line args?
 
 my %transports = (
     RAW    => \&raw_transport,
