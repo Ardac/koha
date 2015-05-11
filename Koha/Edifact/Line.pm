@@ -107,7 +107,7 @@ sub _parse_lines {
         }
         elsif ( $s->tag eq 'RFF' ) {
             my $qualifier = $s->elem( 0, 0 );
-            if ( $qualifier eq 'QLI' ) { # Suppliers unique quotation linenumber
+            if ( $qualifier eq 'QLI' ) { # Suppliers unique quotation reference
                 $d->{reference} = $s->elem( 0, 1 );
             }
             elsif ( $qualifier eq 'LI' ) {    # Buyer's unique orderline number

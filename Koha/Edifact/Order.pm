@@ -334,11 +334,19 @@ sub order_line {
     my $biblioitem = $biblioitems[0];    # makes the assumption there is 1 only
                                          # or else all have same details
 
+    # if theres an ean or issn that probably came from quote
+    # otherwise we assume first id in isbn will be valid ean
+    my @identifiers =
+      ( $biblioitem->ean, $biblioitem->issn, $biblioitem->isbn );
+    my $id_string = join ' ', @identifiers;
+    @identifiers = split /\s+/, $id_string;
+    $id_string = shift @identifiers;
+
     # LIN line-number in msg :: if we had a 13 digit ean we could add
-    $self->add_seg( lin_segment( $linenumber, $biblioitem->isbn ) );
+    $self->add_seg( lin_segment( $linenumber, $id_string ) );
 
     # PIA isbn or other id
-    $self->add_seg( additional_product_id( $biblioitem->isbn ) );
+    $self->add_seg( additional_product_id( join( ' ', @identifiers ) ) );
 
     # IMD biblio description
     if ($use_marc_based_description) {
@@ -406,6 +414,14 @@ sub order_line {
     # RFF unique orderline reference no
     my $rff = join q{}, 'RFF+LI:', $orderline->ordernumber, $seg_terminator;
     $self->add_seg($rff);
+
+    # RFF : suppliers unique quotation reference number
+    if ( $orderline->supplierreference ) {
+        $rff = join q{}, 'RFF+QLI:', $orderline->supplierreference, $seg_terminator;
+        $self->add_seg($rff);
+    }
+
+
 
     # LOC-QTY multiple delivery locations
     #TBD to specify extra delivery locs
@@ -548,26 +564,31 @@ sub add_seg {
 
 sub lin_segment {
     my ( $line_number, $isbn ) = @_;
-    my $isbn_string = q||;
+    my $item_number = q||;
+
     if ($isbn) {
-        if ( $isbn =~ m/(978\d{10})/ ) {
+        if ( $isbn =~ m/^(978\d{10})/ ) {
             $isbn = $1;
         }
-        elsif ( $isbn =~ m/(\d{9}[\dxX])/ ) {
+        elsif ( $isbn =~ m/^(\d{9}[\dxX])/ ) {
             $isbn = $1;
+        }
+        elsif ( $isbn =~ m/^(\d{13})/ ) {    # we have 13 digits assume ean
+            $item_number = "++$1:EN";
+            $isbn        = q{};
         }
         else {
-            undef $isbn;
+            $isbn = q{};
         }
         if ($isbn) {
             my $b_isbn = Business::ISBN->new($isbn);
             if ( $b_isbn->is_valid ) {
                 $isbn        = $b_isbn->as_isbn13->isbn;
-                $isbn_string = "++$isbn:EN";
+                $item_number = "++$isbn:EN";
             }
         }
     }
-    return "LIN+$line_number$isbn_string$seg_terminator";
+    return "LIN+$line_number$item_number$seg_terminator";
 }
 
 sub additional_product_id {

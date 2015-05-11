@@ -341,7 +341,9 @@ sub _abort_download {
 
     my $a = $self->{account}->description;
 
-    $handle->abort();
+    if ($handle) {
+        $handle->abort();
+    }
     $log_message .= ": $a";
     carp $log_message;
 
