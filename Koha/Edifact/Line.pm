@@ -107,11 +107,15 @@ sub _parse_lines {
         }
         elsif ( $s->tag eq 'RFF' ) {
             my $qualifier = $s->elem( 0, 0 );
-            if ( $qualifier eq 'QLI' ) { # Suppliers unique quotation reference
+            if ( $qualifier eq 'QLI' ) {  # Suppliers unique quotation reference
                 $d->{reference} = $s->elem( 0, 1 );
             }
             elsif ( $qualifier eq 'LI' ) {    # Buyer's unique orderline number
                 $d->{ordernumber} = $s->elem( 0, 1 );
+            }
+            elsif ( $qualifier eq 'SLI' )
+            {    # Suppliers unique order line reference number
+                $d->{orderline_reference_number} = $s->elem( 0, 1 );
             }
         }
     }
@@ -336,6 +340,11 @@ sub price {
 sub reference {
     my $self = shift;
     return $self->{reference};
+}
+
+sub orderline_reference_number {
+    my $self = shift;
+    return $self->{orderline_reference_number};
 }
 
 sub ordernumber {

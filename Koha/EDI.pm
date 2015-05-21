@@ -61,6 +61,11 @@ sub create_edi_order {
         }
     )->all;
 
+    if ( !@orderlines ) {
+        carp "No orderlines for basket $basketno";
+        return;
+    }
+
     my $vendor = $schema->resultset('VendorEdiAccount')->search(
         {
             vendor_id => $orderlines[0]->basketno->booksellerid->id,
@@ -84,8 +89,8 @@ sub create_edi_order {
 
     # ingest result
     if ($order_file) {
-        my $m = unidecode($order_file); # remove diacritics and non-latin chars
-        if ($noingest) {    # allows scripts to produce test files
+        my $m = unidecode($order_file);  # remove diacritics and non-latin chars
+        if ($noingest) {                 # allows scripts to produce test files
             return $m;
         }
         my $order = {
@@ -238,7 +243,7 @@ sub process_invoice {
 
 sub _get_invoiced_price {
     my $line  = shift;
-    my $price =  $line->price_net;
+    my $price = $line->price_net;
     if ( !defined $price ) {  # no net price so generate it from lineitem amount
         $price = $line->amt_lineitem;
         if ( $price and $line->quantity > 1 ) {
@@ -463,11 +468,26 @@ sub quote_item {
         order_internalnote => $order_note,
         rrp                => $item->price,
         ecost => _discounted_price( $quote->vendor->discount, $item->price ),
-        uncertainprice    => 0,
-        sort1             => q{},
-        sort2             => q{},
-        supplierreference => $item->reference,
+        uncertainprice => 0,
+        sort1          => q{},
+        sort2          => q{},
+
+        #        supplierreference => $item->reference,
     };
+
+    # suppliers references
+    if ( $item->reference() ) {
+        $order_hash->{suppliers_reference_number}    = $item->reference;
+        $order_hash->{suppliers_reference_qualifier} = 'QLI';
+    }
+    elsif ( $item->orderline_reference_number() ) {
+        $order_hash->{suppliers_reference_number} =
+          $item->orderline_reference_number;
+        $order_hash->{suppliers_reference_qualifier} = 'SLI';
+    }
+    if ( $item->item_number_id ) {    # suppliers ean
+        $order_hash->{line_item_id} = $item->item_number_id;
+    }
 
     if ( $item->girfield('servicing_instruction') ) {
         $order_hash->{order_vendornote} =

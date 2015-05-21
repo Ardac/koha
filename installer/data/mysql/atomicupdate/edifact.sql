@@ -50,6 +50,15 @@ ALTER TABLE aqinvoices ADD COLUMN message_id INT(11) REFERENCES edifact_messages
 -- clean up link on deletes
 ALTER TABLE aqinvoices ADD CONSTRAINT edifact_msg_fk FOREIGN KEY ( message_id ) REFERENCES edifact_messages ( id ) ON DELETE SET NULL;
 
+-- Hold the supplier ids from quotes for ordering
+-- although this is an EAN-13 article number the standard says 35 characters ???
+ALTER TABLE aqorders ADD COLUMN line_item_id varchar(35);
+
+-- The suppliers unique reference usually a quotation line number ('QLI')
+-- Otherwise Suppliers unique orderline reference ('SLI')
+ALTER TABLE aqorders ADD COLUMN suppliers_reference_number varchar(35);
+ALTER TABLE aqorders ADD COLUMN suppliers_reference_qualifier varchar(3);
+
 -- hold the EAN/SAN used in ordering
 CREATE TABLE IF NOT EXISTS edifact_ean (
   branchcode VARCHAR(10) NOT NULL REFERENCES branches (branchcode),

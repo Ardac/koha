@@ -334,18 +334,18 @@ sub order_line {
     my $biblioitem = $biblioitems[0];    # makes the assumption there is 1 only
                                          # or else all have same details
 
-    # if theres an ean or issn that probably came from quote
-    # otherwise we assume first id in isbn will be valid ean
-    my @identifiers =
-      ( $biblioitem->ean, $biblioitem->issn, $biblioitem->isbn );
-    my $id_string = join ' ', @identifiers;
-    @identifiers = split /\s+/, $id_string;
-    $id_string = shift @identifiers;
+    my $id_string = $orderline->line_item_id;
 
     # LIN line-number in msg :: if we had a 13 digit ean we could add
     $self->add_seg( lin_segment( $linenumber, $id_string ) );
 
     # PIA isbn or other id
+    my @identifiers;
+    foreach my $id ( $biblioitem->ean, $biblioitem->issn, $biblioitem->isbn ) {
+        if ( $id && $id ne $id_string ) {
+            push @identifiers, $id;
+        }
+    }
     $self->add_seg( additional_product_id( join( ' ', @identifiers ) ) );
 
     # IMD biblio description
@@ -416,12 +416,11 @@ sub order_line {
     $self->add_seg($rff);
 
     # RFF : suppliers unique quotation reference number
-    if ( $orderline->supplierreference ) {
-        $rff = join q{}, 'RFF+QLI:', $orderline->supplierreference, $seg_terminator;
+    if ( $orderline->suppliers_reference_number ) {
+        $rff = join q{}, 'RFF+', $orderline->suppliers_reference_qualifier,
+          ':', $orderline->suppliers_reference_number, $seg_terminator;
         $self->add_seg($rff);
     }
-
-
 
     # LOC-QTY multiple delivery locations
     #TBD to specify extra delivery locs
@@ -563,32 +562,16 @@ sub add_seg {
 }
 
 sub lin_segment {
-    my ( $line_number, $isbn ) = @_;
-    my $item_number = q||;
+    my ( $line_number, $item_number_id ) = @_;
 
-    if ($isbn) {
-        if ( $isbn =~ m/^(978\d{10})/ ) {
-            $isbn = $1;
-        }
-        elsif ( $isbn =~ m/^(\d{9}[\dxX])/ ) {
-            $isbn = $1;
-        }
-        elsif ( $isbn =~ m/^(\d{13})/ ) {    # we have 13 digits assume ean
-            $item_number = "++$1:EN";
-            $isbn        = q{};
-        }
-        else {
-            $isbn = q{};
-        }
-        if ($isbn) {
-            my $b_isbn = Business::ISBN->new($isbn);
-            if ( $b_isbn->is_valid ) {
-                $isbn        = $b_isbn->as_isbn13->isbn;
-                $item_number = "++$isbn:EN";
-            }
-        }
+    if ($item_number_id) {
+        $item_number_id = "++${item_number_id}:EN";
     }
-    return "LIN+$line_number$item_number$seg_terminator";
+    else {
+        $item_number_id = q||;
+    }
+
+    return "LIN+$line_number$item_number_id$seg_terminator";
 }
 
 sub additional_product_id {

@@ -3060,6 +3060,9 @@ CREATE TABLE `aqorders` ( -- information related to the basket line items
   `subscriptionid` int(11) default NULL, -- links this order line to a subscription (subscription.subscriptionid)
   parent_ordernumber int(11) default NULL, -- ordernumber of parent order line, or same as ordernumber if no parent
   `orderstatus` varchar(16) default 'new', -- the current status for this line item. Can be 'new', 'ordered', 'partial', 'complete' or 'cancelled'
+  line_item_id varchar(35) default NULL, -- Supplier's article id for Edifact orderline
+  suppliers_reference_number varchar(35) default NULL, -- Suppliers unique edifact quote ref
+  suppliers_reference_qualifier varchar(3) default NULL, -- Type of number above usually 'QLI'
   PRIMARY KEY  (`ordernumber`),
   KEY `basketno` (`basketno`),
   KEY `biblionumber` (`biblionumber`),
