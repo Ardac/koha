@@ -444,6 +444,14 @@ sub girfield {
     return $self->{GIR}->[$occ]->{$field};
 }
 
+sub number_of_girs {
+    my $self = shift;
+
+    my $qty = @{ $self->{GIR} };
+
+    return $qty;
+}
+
 sub extract_gir {
     my $s    = shift;
     my %qmap = (

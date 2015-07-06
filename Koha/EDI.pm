@@ -456,6 +456,16 @@ sub quote_item {
     # Create an orderline
     my $order_note = $item->{free_text};
     $order_note ||= q{};
+    my $order_quantity = $item->quantity();
+    my $gir_count      = $item->number_of_girs();
+    $order_quantity ||= 1;    # quantity not necessarily present
+    if ( $gir_count > 1 ) {
+        if ( $gir_count != $order_quantity ) {
+            $logger->error(
+                "Order for $order_quantity items, $gir_count segments present");
+        }
+        $order_quantity = 1;    # attempts to create an orderline for each gir
+    }
 
     # database definitions should set some of these defaults but dont
     my $order_hash = {
@@ -463,7 +473,7 @@ sub quote_item {
         entrydate          => DateTime->now( time_zone => 'local' )->ymd(),
         basketno           => $basketno,
         listprice          => $item->price,
-        quantity           => 1,
+        quantity           => $order_quantity,
         quantityreceived   => 0,
         order_internalnote => $order_note,
         rrp                => $item->price,
@@ -549,21 +559,25 @@ sub quote_item {
         if ( C4::Context->preference('AcqCreateItem') eq 'ordering' ) {
             $item_hash = _create_item_from_quote( $item, $quote );
 
-            my $itemnumber;
-            ( $bib->{biblionumber}, $bib->{biblioitemnumber}, $itemnumber ) =
-              AddItem( $item_hash, $bib->{biblionumber} );
-            $logger->trace("Added item:$itemnumber");
-            $schema->resultset('AqordersItem')->create(
-                {
-                    ordernumber => $first_order->ordernumber,
-                    itemnumber  => $itemnumber,
-                }
-            );
+            my $created = 0;
+            while ( $created < $order_quantity ) {
+                my $itemnumber;
+                ( $bib->{biblionumber}, $bib->{biblioitemnumber}, $itemnumber )
+                  = AddItem( $item_hash, $bib->{biblionumber} );
+                $logger->trace("Added item:$itemnumber");
+                $schema->resultset('AqordersItem')->create(
+                    {
+                        ordernumber => $first_order->ordernumber,
+                        itemnumber  => $itemnumber,
+                    }
+                );
+                ++$created;
+            }
         }
     }
 
-    if ( $item->quantity > 1 ) {
-        my $occurence = 1;
+    if ( $order_quantity == 1 && $item->quantity > 1 ) {
+        my $occurence = 1;    # occ zero already added
         while ( $occurence < $item->quantity ) {
 
             # check budget code
